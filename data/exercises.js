@@ -89,30 +89,6 @@ window.EXERCISES_DATA = [
     "notes": "Bài toán thực tế trong môn Sức bền vật liệu và Thí nghiệm công trình."
   },
   {
-    "id": "ex_ch4_01",
-    "chapter": "ch4",
-    "chapterTitle": "Chương 4",
-    "title": "Bài 4.1: Kiểm tra điểm D thuộc tam giác ABC",
-    "level": "Nâng cao",
-    "problem": "Cho tọa độ 3 đỉnh A, B, C của tam giác và tọa độ điểm D. Kiểm tra xem điểm D có thuộc tam giác ABC hay không?",
-    "analysis": "Áp dụng định lý diện tích: D thuộc tam giác ABC khi và chỉ khi S(ABC) = S(DAB) + S(DBC) + S(DCA). So sánh bằng ngưỡng sai số abs(S_ABC - sum_S) < 1e-6 để tránh lỗi số thực.",
-    "flowchart": "\nflowchart TD\n    Start([\"Bắt đầu\"]) --> In[\"Nhập tọa độ A, B, C và D\"]\n    In --> S_ABC[\"Tính diện tích S_ABC qua tọa độ\"]\n    S_ABC --> CheckDeg{\"S_ABC < 1e-9?\"}\n    CheckDeg -- \"Đúng\" --> Err[\"A, B, C thẳng hàng\"] --> End([\"Kết thúc\"])\n    CheckDeg -- \"Sai\" --> S_subs[\"Tính S_DAB, S_DBC, S_DCA\"]\n    S_subs --> Diff[\"sai_so = |S_ABC - (S_DAB + S_DBC + S_DCA)|\"]\n    Diff --> CheckIn{\"sai_so < 1e-6?\"}\n    CheckIn -- \"Đúng\" --> OutTrue[\"D NẰM TRONG tam giác ABC\"] --> End\n    CheckIn -- \"Sai\" --> OutFalse[\"D NẰM NGOÀI tam giác ABC\"] --> End\n    ",
-    "solution": "def dien_tich_shoelace(x1, y1, x2, y2, x3, y3):\n    return 0.5 * abs(x1*(y2 - y3) + x2*(y3 - y1) + x3*(y1 - y2))\n\ndef kiem_tra_diem_trong_tam_giac():\n    xA, yA = map(float, input(\"Nhập tọa độ A (x y): \").split())\n    xB, yB = map(float, input(\"Nhập tọa độ B (x y): \").split())\n    xC, yC = map(float, input(\"Nhập tọa độ C (x y): \").split())\n    xD, yD = map(float, input(\"Nhập tọa độ D (x y): \").split())\n    \n    s_ABC = dien_tich_shoelace(xA, yA, xB, yB, xC, yC)\n    if s_ABC < 1e-9:\n        print(\"Lỗi: 3 điểm A, B, C không tạo thành tam giác!\")\n        return\n        \n    s_DAB = dien_tich_shoelace(xD, yD, xA, yA, xB, yB)\n    s_DBC = dien_tich_shoelace(xD, yD, xB, yB, xC, yC)\n    s_DCA = dien_tich_shoelace(xD, yD, xC, yC, xA, yA)\n    \n    sum_con = s_DAB + s_DBC + s_DCA\n    if abs(s_ABC - sum_con) < 1e-6:\n        print(f\"✅ Điểm D({xD}, {yD}) NẰM TRONG tam giác ABC.\")\n    else:\n        print(f\"❌ Điểm D({xD}, {yD}) NẰM NGOÀI tam giác ABC.\")\n\nkiem_tra_diem_trong_tam_giac()",
-    "notes": "Một trong những thuật toán nền tảng của phương pháp Phần tử hữu hạn (FEM) khi xác định điểm nạp tải thuộc phần tử nào."
-  },
-  {
-    "id": "ex_ch4_02",
-    "chapter": "ch4",
-    "chapterTitle": "Chương 4",
-    "title": "Bài 4.2: Chuyển đổi nhiệt độ C sang F và ngược lại",
-    "level": "Dễ",
-    "problem": "Người dùng nhập vào nhiệt độ có đuôi 'C' hoặc 'F' (VD: 50F, 100C, 78.5F). Đổi F sang C theo công thức C = (F - 32) * 5/9 và ngược lại F = C * 9/5 + 32.",
-    "analysis": "Dùng slicing chuỗi: s[-1].upper() để lấy đơn vị, s[:-1] để ép sang float.",
-    "flowchart": "\nflowchart TD\n    Start([\"Bắt đầu\"]) --> In[\"Nhập chuỗi temp_str (vd: '100C')\"]\n    In --> Unit[\"unit = temp_str[-1], val = float(temp_str[:-1])\"]\n    Unit --> Check{\"unit == 'C'<br>hay 'F'?\"}\n    Check -- \"C\" --> ToF[\"F = val * 9/5 + 32<br>In nhiệt độ theo F\"] --> End([\"Kết thúc\"])\n    Check -- \"F\" --> ToC[\"C = (val - 32) * 5/9<br>In nhiệt độ theo C\"] --> End\n    Check -- \"Khác\" --> Err[\"Định dạng không hợp lệ\"] --> End\n    ",
-    "solution": "def doi_nhiet_do():\n    s = input(\"Nhập nhiệt độ (vd: 100C hoặc 50F): \").strip()\n    unit = s[-1].upper()\n    try:\n        val = float(s[:-1])\n    except ValueError:\n        print(\"Giá trị số không hợp lệ!\")\n        return\n        \n    if unit == 'C':\n        f = val * 9/5 + 32\n        print(f\"The temperature in Fahrenheit is {f:.1f} degrees.\")\n    elif unit == 'F':\n        c = (val - 32) * 5/9\n        print(f\"The temperature in Celsius is {c:.1f} degrees.\")\n    else:\n        print(\"Đơn vị phải là 'C' hoặc 'F'!\")\n\ndoi_nhiet_do()",
-    "notes": "Bài tập 2 trong file BT Chương 4 của bộ môn."
-  },
-  {
     "id": "ex_ch5_01",
     "chapter": "ch5",
     "chapterTitle": "Chương 5",
@@ -185,16 +161,40 @@ window.EXERCISES_DATA = [
     "notes": "Một bài thi thực hành kinh điển kiểm tra toàn diện tư duy logic, cấu trúc điều kiện, hàm và giao diện GUI."
   },
   {
+    "id": "ex_ch4_01",
+    "chapter": "ch4",
+    "chapterTitle": "Chương 4",
+    "title": "Bài 4.1: Kiểm tra Số Nguyên Tố & Số Hoàn Hảo (Slide Trang 16)",
+    "level": "Cơ bản",
+    "problem": "1. Viết hàm `kiem_tra_nguyen_to(n)` kiểm tra số tự nhiên $n$ có phải là số nguyên tố hay không (lớn hơn 1 và chỉ có 2 ước số là 1 và chính nó).\\n2. Viết hàm `kiem_tra_so_hoan_hao(n)` kiểm tra xem $n$ có phải là số hoàn hảo hay không (tổng tất cả các ước số thực sự nhỏ hơn $n$ bằng chính $n$). Ví dụ: 6 = 1 + 2 + 3, 28 = 1 + 2 + 4 + 7 + 14.",
+    "analysis": "1. Số nguyên tố: Duyệt ước từ 2 đến $\\lfloor\\sqrt{n}\\rfloor$. Nếu chia hết cho bất kỳ số nào thì kết luận `False`, ngược lại `True`.\\n2. Số hoàn hảo: Duyệt $i$ từ 1 đến $n-1$, nếu $n \\% i == 0$ thì cộng vào `tong_uoc`. Kết luận `tong_uoc == n`.",
+    "flowchart": "\nflowchart TD\n    Start([\"Bắt đầu: Nhập n\"]) --> CheckLess{\"n <= 1 ?\"}\n    CheckLess -- \"Đúng\" --> ReturnFalse[\"Không phải SNT / SHH\"] --> EndNode([\"Kết thúc\"])\n    CheckLess -- \"Sai\" --> Loop[\"Duyệt các ước số tiềm năng\"]\n    Loop --> CheckDiv{\"Tổng ước == n / Có ước ngoài 1?\"}\n    CheckDiv -- \"Đúng\" --> OutTrue[\"Kết luận True\"] --> EndNode\n    CheckDiv -- \"Sai\" --> OutFalse[\"Kết luận False\"] --> EndNode\n    classDef step fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;\n    class Start,ReturnFalse,Loop,OutTrue,OutFalse,EndNode step;\n",
+    "solution": "import math\n\n# 1. Kiểm tra số nguyên tố\ndef kiem_tra_nguyen_to(n):\n    if n <= 1:\n        return False\n    if n in (2, 3):\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n        \n    can_n = int(math.isqrt(n))\n    for i in range(5, can_n + 1, 6):\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n    return True\n\n# 2. Kiểm tra số hoàn hảo\ndef kiem_tra_so_hoan_hao(n):\n    if n <= 1:\n        return False\n    tong_uoc = 0\n    for i in range(1, n):\n        if n % i == 0:\n            tong_uoc += i\n    return tong_uoc == n\n\n# Kiểm tra với các ví dụ chuẩn:\nprint(\"28 là số nguyên tố:\", kiem_tra_nguyen_to(28))     # False\nprint(\"28 là số hoàn hảo: \", kiem_tra_so_hoan_hao(28))   # True (1+2+4+7+14=28)\nprint(\"97 là số nguyên tố:\", kiem_tra_nguyen_to(97))     # True",
+    "notes": "Tối ưu hóa vòng lặp nguyên tố bằng cách chỉ duyệt đến sqrt(n) giúp tăng tốc độ thuật toán từ O(n) lên O(sqrt(n))."
+  },
+  {
+    "id": "ex_ch4_02",
+    "chapter": "ch4",
+    "chapterTitle": "Chương 4",
+    "title": "Bài 4.2: Ước lượng Số Pi bằng Chuỗi Leibniz & Mô phỏng Monte Carlo (Slide Trang 15)",
+    "level": "Trung bình",
+    "problem": "1. Tính số Pi theo chuỗi vô hạn Gregory-Leibniz: $S = \\sum_{k=0}^N (-1)^k \\frac{4}{2k+1}$.\\n2. Ước lượng số Pi bằng phương pháp Monte Carlo: Lấy $N$ điểm ngẫu nhiên $(x, y) \\in [0, 1] \\times [0, 1]$, tính tỷ lệ các điểm rơi vào hình tròn $x^2 + y^2 \\le 1$ để suy ra $\\pi \\approx 4 \\times \\frac{N_{trong}}{N_{tong}}$.",
+    "analysis": "Đây là 2 phương pháp tính toán số kinh điển trong Cơ Kỹ Thuật:\\n- Chuỗi giải tích Leibniz: Hội tụ chậm nhưng tất định.\\n- Phương pháp ngẫu nhiên Monte Carlo: Áp dụng rộng rãi trong mô phỏng cơ học xác suất, độ tin cậy kết cấu công trình.",
+    "flowchart": "\nflowchart LR\n    MC[\"Monte Carlo:<br>Sinh điểm (x,y) ngẫu nhiên\"] --> CheckIn{\"x^2 + y^2 <= 1 ?\"}\n    CheckIn -- \"Đúng\" --> Count[\"Đếm N_trong += 1\"]\n    Count --> CalcPi[\"Pi = 4 * (N_trong / N_tong)\"]\n    classDef step fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;\n    class MC,CheckIn,Count,CalcPi step;\n",
+    "solution": "import random\n\n# Cách 1: Chuỗi giải tích Gregory-Leibniz\ndef pi_leibniz(N=100000):\n    tong = 0.0\n    for k in range(N):\n        tong += ((-1)**k) * (4.0 / (2 * k + 1))\n    return tong\n\n# Cách 2: Mô phỏng Monte Carlo\ndef pi_monte_carlo(N=300000):\n    trong_tron = 0\n    for _ in range(N):\n        x = random.random()\n        y = random.random()\n        if x**2 + y**2 <= 1.0:\n            trong_tron += 1\n    return 4.0 * (trong_tron / N)\n\nprint(f\"Pi theo Leibniz (N=100.000):     {pi_leibniz():.5f}\")\nprint(f\"Pi theo Monte Carlo (N=300.000): {pi_monte_carlo():.5f}\")",
+    "notes": "Phương pháp Monte Carlo có sai số tỷ lệ với 1/sqrt(N), do đó muốn tăng 1 chữ số thập phân chính xác cần tăng số mẫu lên 100 lần."
+  },
+  {
     "id": "ex_ch4_03",
     "chapter": "ch4",
     "chapterTitle": "Chương 4",
-    "title": "Bài 4.3: Trò chơi đoán số ngẫu nhiên (while True & break)",
-    "level": "Dễ",
-    "problem": "Viết đoạn chương trình cho người dùng đoán số nguyên ngẫu nhiên do máy sinh ra trong đoạn [1, 9]. Nếu đoán đúng xuất 'You are right!' và dừng. Nếu đoán sai thì cho đoán lại cho tới khi đúng.",
-    "analysis": "Sử dụng thư viện random với random.randint(1, 9). Dùng vòng lặp vô hạn while True và câu lệnh break khi điều kiện đoán đúng được thỏa mãn.",
-    "flowchart": "\nflowchart TD\n    Start([\"Bắt đầu\"]) --> Rand[\"target = random.randint(1, 9)\"]\n    Rand --> In[\"Người dùng nhập số dự đoán: guess\"]\n    In --> Check{\"guess == target?\"}\n    Check -- \"Sai\" --> Retry[\"In 'Sai rồi, đoán lại!'\"] --> In\n    Check -- \"Đúng\" --> Win[\"In 'You are right!'\"] --> End([\"Kết thúc\"])\n    ",
-    "solution": "import random\n\ndef tro_choi_doan_so():\n    target = random.randint(1, 9)\n    print(\"Máy tính đã chọn 1 số bí mật từ 1 đến 9. Hãy thử đoán xem!\")\n    \n    so_lan = 0\n    while True:\n        try:\n            guess = int(input(\"Nhập số bạn đoán: \"))\n            so_lan += 1\n            if guess == target:\n                print(f\"🎉 You are right! Bạn đã đoán đúng sau {so_lan} lần.\")\n                break\n            elif guess < target:\n                print(\"Số bí mật LỚN HƠN số bạn đoán.\")\n            else:\n                print(\"Số bí mật NHỎ HƠN số bạn đoán.\")\n        except ValueError:\n            print(\"Vui lòng chỉ nhập số nguyên hợp lệ!\")\n\ntro_choi_doan_so()",
-    "notes": "Bài tập 6 trong file BT Chương 4 của bộ môn."
+    "title": "Bài 4.3: Tính Số Ngày Trong Tháng & Thuật toán Năm Nhuận (Slide Trang 16)",
+    "level": "Cơ bản",
+    "problem": "Viết chương trình nhập vào 2 số hợp lệ $X$ và $Y$, trong đó $X$ là tháng ($1 \\le X \\le 12$) và $Y$ là năm ($Y > 0$). Cho biết tháng $X$ của năm $Y$ có bao nhiêu ngày.\\nGợi ý từ slide Thầy Nhã: Năm nhuận là năm chia hết cho 4 nhưng không chia hết cho 100, HOẶC năm chia hết cho 400. Tháng 2 năm nhuận có 29 ngày, năm thường có 28 ngày. Ví dụ: Tháng 9 năm 2014 có 30 ngày.",
+    "analysis": "Điều kiện năm nhuận logic: `(Y % 4 == 0 and Y % 100 != 0) or (Y % 400 == 0)`.\\nCác tháng có 31 ngày: 1, 3, 5, 7, 8, 10, 12.\\nCác tháng có 30 ngày: 4, 6, 9, 11.\\nTháng 2: 29 ngày nếu nhuận, 28 ngày nếu không nhuận.",
+    "flowchart": "\nflowchart TD\n    Inp([\"Nhập tháng X, năm Y\"]) --> CheckThang{\"Tháng X ?\"}\n    CheckThang -- \"1, 3, 5, 7, 8, 10, 12\" --> D31[\"31 ngày\"]\n    CheckThang -- \"4, 6, 9, 11\" --> D30[\"30 ngày\"]\n    CheckThang -- \"2\" --> CheckNhuan{\"(Y%4==0 and Y%100!=0)<br>or (Y%400==0) ?\"}\n    CheckNhuan -- \"Đúng (Nhuận)\" --> D29[\"29 ngày\"]\n    CheckNhuan -- \"Sai\" --> D28[\"28 ngày\"]\n    classDef step fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;\n    class Inp,CheckThang,D31,D30,CheckNhuan,D29,D28 step;\n",
+    "solution": "def la_nam_nhuan(nam):\n    return (nam % 4 == 0 and nam % 100 != 0) or (nam % 400 == 0)\n\ndef tinh_so_ngay(thang, nam):\n    if thang in [1, 3, 5, 7, 8, 10, 12]:\n        return 31\n    elif thang in [4, 6, 9, 11]:\n        return 30\n    elif thang == 2:\n        return 29 if la_nam_nhuan(nam) else 28\n    else:\n        return \"Lỗi: Tháng không hợp lệ!\"\n\n# Kiểm tra ví dụ trong slide Thầy Nhã:\nprint(\"Tháng 9/2014 có:\", tinh_so_ngay(9, 2014), \"ngày\") # 30 ngày\nprint(\"Tháng 2/2024 có:\", tinh_so_ngay(2, 2024), \"ngày\") # 29 ngày",
+    "notes": "Quy tắc năm nhuận thế kỷ (chia hết cho 400) giúp lịch Gregory đồng bộ chuẩn xác với chu kỳ tự quay của Trái Đất quanh Mặt Trời."
   },
   {
     "id": "ex_ch4_04",

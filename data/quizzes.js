@@ -128,40 +128,62 @@ window.QUIZZES_DATA = [
   },
   {
     "chapterId": "ch4",
-    "title": "Trắc nghiệm Chương 4: Cấu trúc điều khiển",
+    "title": "Trắc nghiệm Chương 4: Các cấu trúc điều khiển trong Python",
     "questions": [
       {
-        "question": "Biểu thức `0.1 + 0.2 == 0.3` trong Python trả về kết quả gì?",
+        "question": "Trong Python, giá trị nào sau đây được coi là False khi đánh giá biểu thức điều kiện của lệnh `if`?",
         "options": [
-          "True vì toán học 0.1 + 0.2 luôn bằng 0.3",
-          "False do sai số biểu diễn nhị phân của số thực theo chuẩn IEEE 754",
-          "Lỗi SyntaxError vì không được so sánh số thực",
-          "None"
-        ],
-        "answer": 1,
-        "explain": "Do chuẩn số thực dấu phẩy động IEEE 754, 0.1 + 0.2 thực tế xấp xỉ bằng 0.30000000000000004. Vì vậy trong kỹ thuật, luôn dùng `abs(a - b) < eps` hoặc `math.isclose()`."
-      },
-      {
-        "question": "Đoạn code sau in ra kết quả gì?\n```python\nfor i in range(1, 6):\n    if i % 2 == 0:\n        continue\n    print(i, end=' ')\n```",
-        "options": [
-          "1 2 3 4 5",
-          "2 4",
-          "1 3 5",
-          "1 3"
-        ],
-        "answer": 2,
-        "explain": "Khi i là số chẵn (i % 2 == 0), lệnh `continue` lập tức bỏ qua phần còn lại của thân vòng lặp để nhảy sang bước lặp tiếp theo, do đó chỉ các số lẻ 1, 3, 5 được in."
-      },
-      {
-        "question": "Một thanh dầm dài L = 10m cần chia thành các đoạn nhỏ với bước nhảy dx = 0.5m. Lệnh range() nào sau đây KHÔNG THỂ dùng trực tiếp?",
-        "options": [
-          "range(0, 10, 0.5)",
-          "np.arange(0, 10 + 0.5, 0.5)",
-          "Dùng vòng lặp while x <= 10: x += 0.5",
-          "np.linspace(0, 10, 21)"
+          "Danh sách rỗng `[]`",
+          "Số âm `-1`",
+          "Chuỗi có dấu cách `' '`",
+          "Danh sách chứa số 0 `[0]`"
         ],
         "answer": 0,
-        "explain": "Hàm `range()` tích hợp sẵn của Python CHỈ nhận số nguyên int cho cả start, stop và step. Truyền số thực 0.5 vào range() sẽ ném ra lỗi `TypeError: 'float' object cannot be interpreted as an integer`."
+        "explain": "Theo quy tắc chân trị (Truth value testing) trong slide Thầy Nhã: Các tập hợp rỗng (`[]`, `\"\"`, `()`, `{}`), số 0 và hằng số `None` đều được coi là False."
+      },
+      {
+        "question": "Khối `else` trong cấu trúc vòng lặp `for ... else` sẽ KHÔNG ĐƯỢC THỰC THI trong trường hợp nào?",
+        "options": [
+          "Vòng lặp bị ngắt đột ngột bởi lệnh `break`",
+          "Vòng lặp hoàn thành duyệt hết tất cả các phần tử",
+          "Vòng lặp gặp lệnh `continue`",
+          "Vòng lặp gặp lệnh `pass`"
+        ],
+        "answer": 0,
+        "explain": "Khối `else` của vòng lặp for/while chỉ chạy khi vòng lặp kết thúc bình thường. Nếu bị ngắt bởi `break`, khối `else` sẽ lập tức bị bỏ qua."
+      },
+      {
+        "question": "Lời gọi hàm `range(5, 2, -1)` trong Python sinh ra dãy các số nguyên nào?",
+        "options": [
+          "5, 4, 3",
+          "5, 4, 3, 2",
+          "5, 3, 1",
+          "2, 3, 4, 5"
+        ],
+        "answer": 0,
+        "explain": "Hàm range với bước nhảy âm bắt đầu từ 5, giảm mỗi lần 1 đơn vị và DỪNG LẠI TRƯỚC giá trị stop là 2. Do đó dãy số là: 5, 4, 3."
+      },
+      {
+        "question": "Theo quy tắc kiểm tra năm nhuận trong bài giảng của Thầy Nhã, năm nào sau đây là năm nhuận?",
+        "options": [
+          "Năm 2000 (chia hết cho 400)",
+          "Năm 1900 (chia hết cho 100)",
+          "Năm 2021",
+          "Năm 2023"
+        ],
+        "answer": 0,
+        "explain": "Năm nhuận là năm chia hết cho 4 nhưng không chia hết cho 100, HOẶC chia hết cho 400. Năm 2000 chia hết cho 400 nên là năm nhuận (tháng 2 có 29 ngày). Năm 1900 chia hết cho 100 nhưng không chia hết cho 400 nên không phải năm nhuận."
+      },
+      {
+        "question": "Trong vòng lặp `while`, nếu biến điều khiển không thay đổi giá trị để tiến về phía điều kiện dừng, hiện tượng gì sẽ xảy ra?",
+        "options": [
+          "Vòng lặp vô tận (Infinite Loop) làm treo máy hoặc tràn tài nguyên",
+          "Chương trình tự động phát hiện và thoát ra sau 100 vòng lặp",
+          "Python tự động ném ra ngoại lệ `RecursionError`",
+          "Chương trình tự động chuyển sang vòng lặp `for`"
+        ],
+        "answer": 0,
+        "explain": "Vòng lặp while tiếp tục chạy chừng nào điều kiện còn True. Nếu biến điều khiển không tiến về điều kiện dừng (ví dụ: đếm lùi `count = count - 1` trong khi điều kiện `count < 9`), chương trình sẽ rơi vào vòng lặp vô tận."
       }
     ]
   },

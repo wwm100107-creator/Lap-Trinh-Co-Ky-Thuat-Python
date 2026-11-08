@@ -16,7 +16,7 @@ window.EXERCISES_DATA = [
     flowchart: `
 flowchart TD
     Start(["Bắt đầu"]) --> In["Nhập R1, R2"]
-    In --> Check{"R1 > R2 và R2 > 0?"}
+    In --> Check{"R1 > R2<br>và R2 > 0?"}
     Check -- "Sai" --> Err["Báo lỗi: Bán kính không hợp lệ"] --> End(["Kết thúc"])
     Check -- "Đúng" --> Calc["S = pi * (R1^2 - R2^2)"]
     Calc --> Out["In diện tích S"] --> End
@@ -51,7 +51,7 @@ dien_tich_vanh_khan()`,
     flowchart: `
 flowchart TD
     Start(["Bắt đầu"]) --> In["Nhập tọa độ M(x0, y0, z0) và tham số (A, B, C, D)"]
-    In --> CheckNorm{"A^2 + B^2 + C^2 == 0?"}
+    In --> CheckNorm{"A^2 + B^2 + C^2<br>== 0?"}
     CheckNorm -- "Đúng" --> Err["Mặt phẳng không hợp lệ"] --> End(["Kết thúc"])
     CheckNorm -- "Sai" --> Calc["h = |Ax0 + By0 + Cz0 + D| / sqrt(A^2 + B^2 + C^2)"]
     Calc --> Out["In khoảng cách h"] --> End
@@ -183,7 +183,7 @@ kiem_tra_diem_trong_tam_giac()`,
 flowchart TD
     Start(["Bắt đầu"]) --> In["Nhập chuỗi temp_str (vd: '100C')"]
     In --> Unit["unit = temp_str[-1], val = float(temp_str[:-1])"]
-    Unit --> Check{"unit == 'C' hay 'F'?"}
+    Unit --> Check{"unit == 'C'<br>hay 'F'?"}
     Check -- "C" --> ToF["F = val * 9/5 + 32<br>In nhiệt độ theo F"] --> End(["Kết thúc"])
     Check -- "F" --> ToC["C = (val - 32) * 5/9<br>In nhiệt độ theo C"] --> End
     Check -- "Khác" --> Err["Định dạng không hợp lệ"] --> End
@@ -516,9 +516,9 @@ else:
 flowchart TD
     GUI["Cửa sổ Tkinter: 3 Entry a, b, c & Button Tính toán"]
     GUI --> Click["Người dùng bấm nút -> gọi hàm xu_ly()"]
-    Click --> CheckVal{"Đọc float(a, b, c) thành công?"}
+    Click --> CheckVal{"Đọc float(a, b, c)<br>thành công?"}
     CheckVal -- "Sai" --> Err1["messagebox.showerror('Lỗi', 'Vui lòng nhập số!')"]
-    CheckVal -- "Đúng" --> CheckIneq{"a+b>c và b+c>a và c+a>b?"}
+    CheckVal -- "Đúng" --> CheckIneq{"Thỏa mãn BĐT<br>tam giác?"}
     CheckIneq -- "Sai" --> Err2["Cập nhật: Không phải tam giác hợp lệ"]
     CheckIneq -- "Đúng" --> Calc["Tính Chu vi, Diện tích Heron, Phân loại"]
     Calc --> Update["Cập nhật kết quả lên StringVar"]

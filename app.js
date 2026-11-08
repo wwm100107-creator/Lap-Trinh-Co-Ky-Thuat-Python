@@ -58,21 +58,53 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 3. Khởi tạo Mermaid
-  function initMermaid() {
+  // 3. Khởi tạo Mermaid chuẩn font và chống tràn chữ
+  async function initMermaid() {
     if (!window.mermaid) return;
+
+    try {
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
+    } catch (e) {
+      console.warn("Fonts ready wait:", e);
+    }
+
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     mermaid.initialize({
       startOnLoad: false,
       theme: isDark ? "dark" : "default",
       securityLevel: "loose",
-      fontFamily: "Inter, sans-serif"
+      fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+      fontSize: 14,
+      flowchart: {
+        htmlLabels: true,
+        useMaxWidth: true,
+        padding: 24,
+        nodeSpacing: 50,
+        rankSpacing: 50,
+        curve: "basis"
+      }
     });
-    setTimeout(() => {
-      mermaid.run({
+
+    // Lưu và khôi phục mã nguồn Mermaid gốc khi re-render
+    const mermaidElements = document.querySelectorAll(".mermaid");
+    mermaidElements.forEach(el => {
+      if (!el.hasAttribute("data-raw-code")) {
+        el.setAttribute("data-raw-code", el.textContent.trim());
+      } else {
+        el.removeAttribute("data-processed");
+        el.textContent = el.getAttribute("data-raw-code");
+      }
+    });
+
+    try {
+      await mermaid.run({
         querySelector: ".mermaid"
       });
-    }, 100);
+    } catch (err) {
+      console.error("Mermaid run error:", err);
+    }
   }
 
   // 4. Toast Notification

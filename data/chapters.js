@@ -136,11 +136,11 @@ print(f"Lực gối tựa cuối dầm đã tách: {last_load} kN")
       <h3>Mô hình rẽ nhánh chuẩn:</h3>
       <div class="mermaid">
       flowchart TD
-          A(["Bắt đầu"]) --> B{"Điều kiện 1 đúng?"}
-          B -- "True" --> C["Thực thi Khối 1"] --> End(["Kết thúc"])
-          B -- "False" --> D{"Điều kiện 2 đúng?"}
-          D -- "True" --> E["Thực thi Khối 2"] --> End
-          D -- "False" --> F["Thực thi Khối else"] --> End
+          A(["&nbsp; Bắt đầu &nbsp;"]) --> B{"Điều kiện 1<br>đúng?"}
+          B -- "True" --> C["&nbsp; Thực thi Khối 1 &nbsp;"] --> End(["&nbsp; Kết thúc &nbsp;"])
+          B -- "False" --> D{"Điều kiện 2<br>đúng?"}
+          D -- "True" --> E["&nbsp; Thực thi Khối 2 &nbsp;"] --> End
+          D -- "False" --> F["&nbsp; Thực thi Khối else &nbsp;"] --> End
       </div>
 
       <h2>2. Giải và biện luận phương trình bậc hai $ax^2 + bx + c = 0$</h2>
@@ -148,15 +148,15 @@ print(f"Lực gối tựa cuối dầm đã tách: {last_load} kN")
       
       <div class="mermaid">
       flowchart TD
-          Start(["Bắt đầu: Nhập a, b, c"]) --> CheckA{"abs(a) < 1e-9?"}
-          CheckA -- "Đúng (a = 0)" --> Linear{"abs(b) < 1e-9?"}
-          Linear -- "Đúng (b = 0)" --> CheckC{"abs(c) < 1e-9?"}
-          CheckC -- "Đúng" --> OutInf["Vô số nghiệm"] --> Fin(["Kết thúc"])
-          CheckC -- "Sai" --> OutVN["Vô nghiệm"] --> Fin
-          Linear -- "Sai (b != 0)" --> OutLin["Nghiệm x = -c / b"] --> Fin
+          Start(["&nbsp; Bắt đầu: Nhập a, b, c &nbsp;"]) --> CheckA{"&nbsp; a == 0?<br>(abs(a) < 1e-9) &nbsp;"}
+          CheckA -- "Đúng (a = 0)" --> Linear{"&nbsp; b == 0?<br>(abs(b) < 1e-9) &nbsp;"}
+          Linear -- "Đúng (b = 0)" --> CheckC{"&nbsp; c == 0?<br>(abs(c) < 1e-9) &nbsp;"}
+          CheckC -- "Đúng" --> OutInf["&nbsp; Vô số nghiệm &nbsp;"] --> Fin(["&nbsp; Kết thúc &nbsp;"])
+          CheckC -- "Sai" --> OutVN["&nbsp; Vô nghiệm &nbsp;"] --> Fin
+          Linear -- "Sai (b != 0)" --> OutLin["&nbsp; Nghiệm x = -c / b &nbsp;"] --> Fin
           
-          CheckA -- "Sai (a != 0)" --> CalcDelta["Delta = b^2 - 4ac"]
-          CalcDelta --> CheckDelta{"Delta?"}
+          CheckA -- "Sai (a != 0)" --> CalcDelta["&nbsp; Delta = b^2 - 4ac &nbsp;"]
+          CalcDelta --> CheckDelta{"&nbsp; Dấu của<br>Delta? &nbsp;"}
           CheckDelta -- "Delta > 0" --> TwoRoots["2 nghiệm phân biệt:<br>x1, x2 = (-b +- sqrt(Delta)) / (2a)"] --> Fin
           CheckDelta -- "Delta == 0" --> OneRoot["Nghiệm kép:<br>x = -b / (2a)"] --> Fin
           CheckDelta -- "Delta < 0" --> ComplexRoots["Nghiệm phức:<br>x = (-b / 2a) +- i * (sqrt(-Delta) / 2a)"] --> Fin

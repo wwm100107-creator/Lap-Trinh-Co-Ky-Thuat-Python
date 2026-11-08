@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lập Trình Cơ Kỹ Thuật (Python) - ĐHBK TP.HCM</title>
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: {
+            bkdark: '#030391',
+            bklight: '#1488D8',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Prism.js Syntax Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+  <!-- KaTeX for Math Formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+  <!-- Mermaid.js for Diagrams & Flowcharts -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen">
+
+  <div class="app-layout">
+    
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="sidebar">
+      <!-- Logo & Header Trường -->
+      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#030391] to-[#1488D8] flex items-center justify-center text-white font-black text-sm shadow-md">
+            BK
+          </div>
+          <div>
+            <h2 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Cơ Kỹ Thuật</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">ĐHBK TP.HCM • Python</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Khung Tiến độ Cá nhân -->
+      <div class="px-4 py-3 bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center justify-between text-xs font-semibold mb-1.5">
+          <span class="text-slate-600 dark:text-slate-300">Tiến độ học tập</span>
+          <span id="progress-text" class="text-blue-600 dark:text-blue-400">0%</span>
+        </div>
+        <div class="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+          <div id="progress-fill" class="bg-gradient-to-r from-blue-600 to-cyan-500 h-full rounded-full transition-all duration-500" style="width: 25%;"></div>
+        </div>
+      </div>
+
+      <!-- Danh sách Chương bài giảng -->
+      <div class="flex-1 overflow-y-auto p-3">
+        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">Chương Trình Lý Thuyết</div>
+        <div id="chapter-list">
+          <!-- Render tự động bởi app.js -->
+        </div>
+      </div>
+
+      <!-- Footer Sidebar -->
+      <div class="p-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Học là áp dụng & nhớ</span>
+        </span>
+        <button id="theme-toggle" class="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Đổi giao diện Sáng/Tối">
+          <i data-lucide="moon" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="main-content">
+      
+      <!-- Top Navigation Bar -->
+      <header class="sticky top-0 z-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 md:px-8 py-3 flex items-center justify-between">
+        <nav class="flex items-center gap-1 md:gap-4 overflow-x-auto text-xs md:text-sm font-medium">
+          <button id="nav-theory" class="px-3 py-2 rounded-md transition text-slate-600 dark:text-slate-300 hover:text-blue-600 active border-b-2 border-blue-600 text-blue-600 font-bold flex items-center gap-1.5">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            <span>Lý Thuyết Chuyên Sâu</span>
+          </button>
+          <button id="nav-exercises" class="px-3 py-2 rounded-md transition text-slate-600 dark:text-slate-300 hover:text-blue-600 flex items-center gap-1.5">
+            <i data-lucide="dumbbell" class="w-4 h-4"></i>
+            <span>Ngân Hàng Bài Tập</span>
+          </button>
+          <button id="nav-quizzes" class="px-3 py-2 rounded-md transition text-slate-600 dark:text-slate-300 hover:text-blue-600 flex items-center gap-1.5">
+            <i data-lucide="help-circle" class="w-4 h-4"></i>
+            <span>Trắc Nghiệm (Học là Nhớ)</span>
+          </button>
+          <button id="nav-cheatsheet" class="px-3 py-2 rounded-md transition text-slate-600 dark:text-slate-300 hover:text-blue-600 flex items-center gap-1.5">
+            <i data-lucide="bookmark" class="w-4 h-4"></i>
+            <span>Bảng Tra Cứu (Cheatsheet)</span>
+          </button>
+        </nav>
+      </header>
+
+      <!-- Dynamic View Container -->
+      <div id="view-container" class="flex-1 p-4 md:p-8">
+        <!-- Render nội dung tương ứng theo tab -->
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Toast Message -->
+  <div id="toast"></div>
+
+  <!-- Data Scripts -->
+  <script src="data/chapters.js"></script>
+  <script src="data/exercises.js"></script>
+  <script src="data/quizzes.js"></script>
+  <script src="data/cheatsheet.js"></script>
+
+  <!-- App Core Script -->
+  <script src="app.js"></script>
+</body>
+</html>

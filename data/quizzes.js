@@ -66,6 +66,67 @@ window.QUIZZES_DATA = [
     ]
   },
   {
+    "chapterId": "ch2_3",
+    "title": "Trắc nghiệm Chương 2 & 3: Ngôn ngữ Python & Các kiểu dữ liệu kỹ thuật",
+    "questions": [
+      {
+        "question": "Đặc tính 'Duck Typing' (Latent Typing) trong Python có nghĩa là gì?",
+        "options": [
+          "Kiểu dữ liệu được kiểm tra tự động tại thời điểm thực thi (runtime) dựa trên giá trị được gán",
+          "Lập trình viên bắt buộc phải khai báo kiểu dữ liệu của biến trước khi sử dụng",
+          "Chỉ hỗ trợ kiểu dữ liệu số nguyên và số thực",
+          "Tất cả các biến đều được ép kiểu tự động sang chuỗi String"
+        ],
+        "answer": 0,
+        "explain": "Theo slide Thầy Nhã (trang 6, Chương 2): Python sử dụng Duck typing, không kiểm tra ràng buộc kiểu tại thời điểm dịch mà xác định tự động tại thời điểm thực thi dựa trên phép gán."
+      },
+      {
+        "question": "Câu lệnh nào sau đây sẽ gây ra lỗi `TypeError` do Python là ngôn ngữ định kiểu mạnh (Strongly Typed)?",
+        "options": [
+          "'abc' + 3",
+          "'abc' * 3",
+          "'abc' + '3'",
+          "str(3) + 'abc'"
+        ],
+        "answer": 0,
+        "explain": "Python không tự động chuyển đổi số 3 thành chuỗi '3' khi thực hiện phép cộng `+`. Phép toán `'abc' + 3` sẽ báo lỗi `TypeError: can only concatenate str (not 'int') to str`."
+      },
+      {
+        "question": "Để khai báo một Tuple có DUY NHẤT một phần tử là số 5, cú pháp nào sau đây là CHÍNH XÁC?",
+        "options": [
+          "t = (5,)",
+          "t = (5)",
+          "t = [5]",
+          "t = {5}"
+        ],
+        "answer": 0,
+        "explain": "Theo slide Thầy Nhã (trang 15, Chương 3): Nếu tuple có 1 phần tử đơn thì bắt buộc phải có dấu phẩy ở cuối `(5,)`. Nếu chỉ viết `(5)` thì Python coi là số nguyên `int` trong dấu ngoặc."
+      },
+      {
+        "question": "Trong Python, đối tượng thuộc kiểu dữ liệu nào sau đây KHÔNG THỂ được dùng làm Khóa (Key) trong Dictionary?",
+        "options": [
+          "List (ví dụ: ['x', 'y'])",
+          "String (ví dụ: 'Heigh')",
+          "Integer (ví dụ: 100)",
+          "Tuple (ví dụ: (1, 2))"
+        ],
+        "answer": 0,
+        "explain": "Khóa (Key) của Dictionary bắt buộc phải là kiểu BẤT BIẾN (Immutable) để có thể băm (Hashable). List là kiểu khả biến (Mutable) nên dùng làm key sẽ báo lỗi `TypeError: unhashable type: 'list'`."
+      },
+      {
+        "question": "Cho chuỗi `s = 'Hello Python!'`. Cú pháp cắt lát (slicing) nào sau đây sẽ trả về chuỗi đảo ngược `'!nohtyP olleH'`?",
+        "options": [
+          "s[::-1]",
+          "s[0:-1]",
+          "s[-1:0]",
+          "s[::1]"
+        ],
+        "answer": 0,
+        "explain": "Cú pháp `s[Start:Stop:Step]` với bước nhảy `Step = -1` và bỏ trống Start, Stop sẽ duyệt toàn bộ chuỗi từ ký tự cuối cùng ngược về đầu, tạo ra chuỗi đảo ngược."
+      }
+    ]
+  },
+  {
     "chapterId": "ch4",
     "title": "Trắc nghiệm Chương 4: Cấu trúc điều khiển",
     "questions": [

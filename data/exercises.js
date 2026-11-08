@@ -44,13 +44,37 @@ window.EXERCISES_DATA = [
     "id": "ex_ch2_02",
     "chapter": "ch2_3",
     "chapterTitle": "Chương 2 & 3",
-    "title": "Bài 2.2: Khoảng cách từ điểm đến mặt phẳng 3D",
+    "title": "Bài 2.2: Sắp xếp Danh sách Chuỗi theo Độ dài Tăng dần (Slide Trang 20)",
+    "level": "Cơ bản",
+    "problem": "Với 1 list gồm các string được cho trước. Hãy viết 1 chương trình sắp xếp các phần tử trong list theo thứ tự độ dài string tăng dần.\\nVí dụ:\\nInput: `['aaaa', 'b', 'ccc', 'dd']`\\nOutput: `['b', 'dd', 'ccc', 'aaaa']`",
+    "analysis": "Có 2 hướng tiếp cận:\\n1. Chuẩn Pythonic: Sử dụng phương thức `.sort(key=len)` hoặc hàm `sorted(list, key=len)`. Hàm `len` được truyền vào làm tiêu chí so sánh độ dài.\\n2. Giải thuật cơ bản: Sử dụng thuật toán sắp xếp nổi bọt (Bubble Sort) so sánh `len(ds[j]) > len(ds[j+1])` và hoán vị.",
+    "flowchart": "\nflowchart TD\n    Start([\"Bắt đầu: Nhập ds\"]) --> Sort[\"ds.sort(key=len)<br>Hoặc chạy Bubble Sort theo len\"]\n    Sort --> Out[\"In danh sách sau khi sắp xếp\"] --> EndNode([\"Kết thúc\"])\n    classDef step fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;\n    class Start,Sort,Out,EndNode step;\n",
+    "solution": "# CÁCH 1: Dùng phương thức có sẵn của Python\nds = ['aaaa', 'b', 'ccc', 'dd']\nds.sort(key=len)\nprint(\"Kết quả cách 1:\", ds)\n\n# CÁCH 2: Dùng thuật toán sắp xếp nổi bọt (Bubble Sort)\ndef sap_xep_bubble(arr):\n    n = len(arr)\n    for i in range(n - 1):\n        for j in range(0, n - i - 1):\n            if len(arr[j]) > len(arr[j + 1]):\n                arr[j], arr[j + 1] = arr[j + 1], arr[j]\n    return arr\n\nds_test = ['aaaa', 'b', 'ccc', 'dd']\nprint(\"Kết quả cách 2:\", sap_xep_bubble(ds_test))",
+    "notes": "Phương thức list.sort() thực hiện in-place (trên chính danh sách ban đầu) với độ phức tạp thuật toán Timsort là O(n log n)."
+  },
+  {
+    "id": "ex_ch2_03",
+    "chapter": "ch2_3",
+    "chapterTitle": "Chương 2 & 3",
+    "title": "Bài 2.3: Đảo ngược Thứ tự các Từ và Viết hoa Toàn bộ (Slide Trang 20)",
+    "level": "Cơ bản",
+    "problem": "Biết rằng `split()` dùng để tách các từ trong 1 string thành các thành phần trong 1 list. Dấu tách mặc định là 'Dấu cách'.\\nHãy viết chương trình cho phép người dùng nhập vào 1 câu, sau đó xuất ra màn hình câu với thứ tự các từ bị đảo ngược và toàn bộ câu được viết hoa.\\nVí dụ:\\nInput: `'luc di het minh luc ve het buon'`\\nOutput: `'BUON HET VE LUC MINH HET DI LUC'`",
+    "analysis": "1. Dùng `s.split()` để phân tách câu thành danh sách các từ.\\n2. Dùng kỹ thuật cắt lát bước nhảy âm `cac_tu[::-1]` hoặc phương thức `.reverse()` để đảo ngược danh sách từ.\\n3. Dùng `' '.join(cac_tu_dao_nguoc)` để ghép lại thành câu hoàn chỉnh và gọi `.upper()` để viết hoa toàn bộ.",
+    "flowchart": "\nflowchart TD\n    Inp([\"Nhập câu s\"]) --> Split[\"cac_tu = s.split()\"]\n    Split --> Rev[\"cac_tu_dao = cac_tu[::-1]\"]\n    Rev --> JoinUpper[\"res = ' '.join(cac_tu_dao).upper()\"]\n    JoinUpper --> Out[\"In kết quả res\"] --> EndNode([\"Kết thúc\"])\n    classDef step fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;\n    class Inp,Split,Rev,JoinUpper,Out,EndNode step;\n",
+    "solution": "def dao_nguoc_tu_va_viet_hoa(s):\n    # 1. Tách chuỗi thành list các từ\n    cac_tu = s.split()\n    \n    # 2. Đảo ngược thứ tự từ\n    cac_tu_dao = cac_tu[::-1]\n    \n    # 3. Ghép lại và in hoa\n    return \" \".join(cac_tu_dao).upper()\n\n# Thử nghiệm với chuỗi ví dụ trong slide:\ncau_vao = \"luc di het minh luc ve het buon\"\ncau_ra = dao_nguoc_tu_va_viet_hoa(cau_vao)\nprint(\"Kết quả:\", cau_ra)",
+    "notes": "Lưu ý phương thức .upper() trả về chuỗi mới vì chuỗi String trong Python là bất biến (Immutable)."
+  },
+  {
+    "id": "ex_ch2_04",
+    "chapter": "ch2_3",
+    "chapterTitle": "Chương 2 & 3",
+    "title": "Bài 2.4: Tra cứu Giờ Hoàng Đạo theo Can Chi Âm lịch (Slide Trang 21)",
     "level": "Trung bình",
-    "problem": "Viết chương trình xác định khoảng cách $h$ từ điểm $M(x_0, y_0, z_0)$ đến mặt phẳng $(P): Ax + By + Cz + D = 0$.",
-    "analysis": "Công thức hình học giải tích không gian: $h = \\frac{|A x_0 + B y_0 + C z_0 + D|}{\\sqrt{A^2 + B^2 + C^2}}$.",
-    "flowchart": "\nflowchart TD\n    Start([\"Bắt đầu\"]) --> In[\"Nhập tọa độ M(x0, y0, z0) và tham số (A, B, C, D)\"]\n    In --> CheckNorm{\"A^2 + B^2 + C^2<br>== 0?\"}\n    CheckNorm -- \"Đúng\" --> Err[\"Mặt phẳng không hợp lệ\"] --> End([\"Kết thúc\"])\n    CheckNorm -- \"Sai\" --> Calc[\"h = |Ax0 + By0 + Cz0 + D| / sqrt(A^2 + B^2 + C^2)\"]\n    Calc --> Out[\"In khoảng cách h\"] --> End\n    ",
-    "solution": "import math\n\ndef khoang_cach_diem_den_mp():\n    print(\"Nhập tọa độ điểm M(x0, y0, z0):\")\n    x0, y0, z0 = map(float, input().split())\n    \n    print(\"Nhập các tham số mặt phẳng (P): A, B, C, D:\")\n    A, B, C, D = map(float, input().split())\n    \n    mau = math.sqrt(A**2 + B**2 + C**2)\n    if mau < 1e-9:\n        print(\"Lỗi: Vector pháp tuyến (A, B, C) không thể bằng vector 0!\")\n        return\n        \n    tu = abs(A*x0 + B*y0 + C*z0 + D)\n    h = tu / mau\n    print(f\"Khoảng cách từ M đến mặt phẳng (P) là: h = {h:.4f}\")\n\nkhoang_cach_diem_den_mp()",
-    "notes": "Bài toán thường gặp trong tính toán tọa độ không gian kết cấu giàn không gian 3D."
+    "problem": "Theo Wikipedia và slide Thầy Nhã: Một ngày đêm âm lịch là 12 giờ (2 tiếng đồng hồ là một giờ), bắt đầu là giờ Tý (từ 23h đêm hôm trước đến trước 1h sáng) theo thứ tự: Tý, Sửu, Dần, Mão, Thìn, Tị, Ngọ, Mùi, Thân, Dậu, Tuất, Hợi.\\nBảng quy ước:\\n23h-1h: Tý | 1h-3h: Sửu | 3h-5h: Dần | 5h-7h: Mão | 7h-9h: Thìn | 9h-11h: Tị\\n11h-13h: Ngọ | 13h-15h: Mùi | 15h-17h: Thân | 17h-19h: Dậu | 19h-21h: Tuất | 21h-23h: Hợi\\nHãy viết chương trình để khi người dùng nhập vào giờ (số nguyên từ 0 đến 23) thì xuất ra kết quả là giờ hoàng đạo tương ứng. Ví dụ Input: 16 -> Output: Thân.",
+    "analysis": "Có 2 cách giải:\\n- Cách 1: Dùng từ điển Dictionary hoặc chuỗi if-elif kiểm tra các khoảng giờ.\\n- Cách 2 (Thuật toán số học tối ưu): Tạo list 12 con giáp `['Tý', 'Sửu', ..., 'Hợi']`. Nhận xét: Công thức ánh xạ từ giờ $h$ sang chỉ số là $index = ((h + 1) // 2) \\pmod{12}$. Với $h=16$: $(16+1)//2 = 8 \\implies 8 \\pmod{12} = 8$ (ứng với Thân).",
+    "flowchart": "\nflowchart TD\n    Inp([\"Nhập giờ h (0-23)\"]) --> CheckValid{\"0 <= h <= 23 ?\"}\n    CheckValid -- \"Sai\" --> Err[\"Báo lỗi giờ không hợp lệ\"] --> EndNode([\"Kết thúc\"])\n    CheckValid -- \"Đúng\" --> CalcIndex[\"index = ((h + 1) // 2) % 12\"]\n    CalcIndex --> Lookup[\"gio_hd = CAN_CHI[index]\"]\n    Lookup --> Out[\"In giờ hoàng đạo\"] --> EndNode\n    classDef step fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;\n    class Inp,CheckValid,CalcIndex,Lookup,Out,EndNode step;\n",
+    "solution": "CAN_CHI = [\n    \"Tý\", \"Sửu\", \"Dần\", \"Mão\", \"Thìn\", \"Tị\", \n    \"Ngọ\", \"Mùi\", \"Thân\", \"Dậu\", \"Tuất\", \"Hợi\"\n]\n\ndef tra_cuu_gio_hoang_dao(gio):\n    if not (0 <= gio <= 23):\n        return \"Lỗi: Giờ phải là số nguyên từ 0 đến 23!\"\n    \n    # Công thức toán học chuyển đổi:\n    chi_so = ((gio + 1) // 2) % 12\n    return CAN_CHI[chi_so]\n\n# Kiểm tra các mốc giờ đặc biệt:\nprint(\"Giờ 16:\", tra_cuu_gio_hoang_dao(16))  # Thân\nprint(\"Giờ 23:\", tra_cuu_gio_hoang_dao(23))  # Tý\nprint(\"Giờ 0: \", tra_cuu_gio_hoang_dao(0))   # Tý\nprint(\"Giờ 7: \", tra_cuu_gio_hoang_dao(7))   # Thìn",
+    "notes": "Công thức toán học modulo % 12 giúp code ngắn gọn, không cần tới 12 khối if-elif cồng kềnh."
   },
   {
     "id": "ex_ch3_01",

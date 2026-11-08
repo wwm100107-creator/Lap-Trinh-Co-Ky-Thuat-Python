@@ -716,9 +716,9 @@ plt.show()
       <h2>3. Ứng dụng hoàn chỉnh: Phần mềm Tính toán Dầm Đơn Giản Chịu Lực Tập Trung</h2>
       <p>Một phần mềm kỹ thuật thực tế cho phép nhập: Chiều dài dầm $L$ (m), vị trí đặt lực $a$ (m), độ lớn lực $P$ (kN). Chương trình tính và xuất:</p>
       <ul>
-        <li>Phản lực tại gối tựa $A$: $R_A = P \cdot (L - a) / L$</li>
-        <li>Phản lực tại gối tựa $B$: $R_B = P \cdot a / L$</li>
-        <li>Mô men uốn cực đại tại điểm đặt lực: $M_{max} = R_A \cdot a$</li>
+        <li>Phản lực tại gối tựa $A$: $R_A = \frac{P \cdot (L - a)}{L}$</li>
+        <li>Phản lực tại gối tựa $B$: $R_B = \frac{P \cdot a}{L}$</li>
+        <li>Mô men uốn cực đại tại điểm đặt lực: $M_{\max} = R_A \cdot a$</li>
       </ul>
 
       <pre><code class="language-python">import tkinter as tk

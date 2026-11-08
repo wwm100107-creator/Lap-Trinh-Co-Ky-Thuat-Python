@@ -323,3 +323,23 @@ tr:last-child td {
   transform: translateY(0);
   opacity: 1;
 }
+
+/* ==========================================================================
+   MathType / KaTeX Mathematical Notation Styling
+   ========================================================================== */
+.katex {
+  font-size: 1.08em;
+  text-rendering: optimizeLegibility;
+}
+
+.katex-display {
+  margin: 1.25rem 0 !important;
+  padding: 0.5rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+h1 .katex, h2 .katex, h3 .katex {
+  font-size: 0.95em;
+  color: inherit;
+}

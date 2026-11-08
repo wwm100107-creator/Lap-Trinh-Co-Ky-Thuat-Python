@@ -11,8 +11,8 @@ window.EXERCISES_DATA = [
     chapterTitle: "Chương 2 & 3",
     title: "Bài 2.1: Tính diện tích hình vành khăn",
     level: "Dễ",
-    problem: "Viết đoạn chương trình tính diện tích hình vành khăn giới hạn bởi 2 bán kính R1 và R2 (R1 > R2 > 0) do người dùng nhập vào từ bàn phím.",
-    analysis: "Diện tích vành khăn: S = pi * (R1^2 - R2^2). Cần kiểm tra điều kiện R1 > R2 > 0 trước khi tính.",
+    problem: "Viết đoạn chương trình tính diện tích hình vành khăn giới hạn bởi 2 bán kính $R_1$ và $R_2$ ($R_1 > R_2 > 0$) do người dùng nhập vào từ bàn phím.",
+    analysis: "Diện tích vành khăn: $S = \\pi (R_1^2 - R_2^2)$. Cần kiểm tra điều kiện $R_1 > R_2 > 0$ trước khi tính.",
     flowchart: `
 flowchart TD
     Start(["Bắt đầu"]) --> In["Nhập R1, R2"]
@@ -46,8 +46,8 @@ dien_tich_vanh_khan()`,
     chapterTitle: "Chương 2 & 3",
     title: "Bài 2.2: Khoảng cách từ điểm đến mặt phẳng 3D",
     level: "Trung bình",
-    problem: "Viết chương trình xác định khoảng cách h từ điểm M(x0, y0, z0) đến mặt phẳng (P): Ax + By + Cz + D = 0.",
-    analysis: "Công thức hình học giải tích không gian: h = |A*x0 + B*y0 + C*z0 + D| / sqrt(A^2 + B^2 + C^2).",
+    problem: "Viết chương trình xác định khoảng cách $h$ từ điểm $M(x_0, y_0, z_0)$ đến mặt phẳng $(P): Ax + By + Cz + D = 0$.",
+    analysis: "Công thức hình học giải tích không gian: $h = \\frac{|A x_0 + B y_0 + C z_0 + D|}{\\sqrt{A^2 + B^2 + C^2}}$.",
     flowchart: `
 flowchart TD
     Start(["Bắt đầu"]) --> In["Nhập tọa độ M(x0, y0, z0) và tham số (A, B, C, D)"]
@@ -217,8 +217,8 @@ doi_nhiet_do()`,
     chapterTitle: "Chương 5",
     title: "Bài 5.1: Xây dựng Module Ma trận hoàn chỉnh (matrixEM.py)",
     level: "Đề thi",
-    problem: "Viết module matrixEM.py gồm các hàm: cộng ma trận, nhân 2 ma trận bất kỳ, trích xuất ma trận con và tính định thức ma trận vuông cấp n bằng đệ quy.",
-    analysis: "Khai triển Laplace theo dòng 0: det(A) = sum((-1)^j * A[0][j] * det(M_0j)). Trường hợp dừng của đệ quy là n=1 hoặc n=2.",
+    problem: "Viết module matrixEM.py gồm các hàm: cộng ma trận, nhân 2 ma trận bất kỳ, trích xuất ma trận con và tính định thức ma trận vuông cấp $n$ bằng đệ quy.",
+    analysis: "Khai triển Laplace theo dòng 0: $\\det(A) = \\sum_{j=0}^{n-1} (-1)^j A_{0j} \\det(M_{0j})$. Trường hợp dừng của đệ quy là $n=1$ hoặc $n=2$.",
     flowchart: `
 flowchart TD
     Start(["determinant(A)"]) --> CheckN{"Kích thước n?"}
@@ -278,8 +278,8 @@ if __name__ == "__main__":
     chapterTitle: "Chương 5",
     title: "Bài 5.2: Xấp xỉ tích phân hình thang cho tải trọng phân bố",
     level: "Nâng cao",
-    problem: "Viết hàm tính xấp xỉ tích phân I = int_x1^x2 (ax^2 + bx + c) dx bằng công thức hình thang với số khoảng chia n. So sánh với nghiệm giải tích chính xác.",
-    analysis: "Công thức hình thang: I = h * [0.5*f(a) + sum(f(a + i*h)) + 0.5*f(b)]. Nghiệm giải tích: F(x) = a*x^3/3 + b*x^2/2 + c*x.",
+    problem: "Viết hàm tính xấp xỉ tích phân $I = \\int_{x_1}^{x_2} (ax^2 + bx + c) dx$ bằng công thức hình thang với số khoảng chia $n$. So sánh với nghiệm giải tích chính xác.",
+    analysis: "Công thức hình thang: $I \\approx h \\left[ \\frac{f(a) + f(b)}{2} + \\sum_{i=1}^{n-1} f(x_i) \\right]$. Nghiệm giải tích: $F(x) = \\frac{a x^3}{3} + \\frac{b x^2}{2} + c x$.",
     flowchart: `
 flowchart TD
     Start(["Bắt đầu"]) --> In["f(x) = ax^2 + bx + c, [x1, x2], n"]

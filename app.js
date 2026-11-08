@@ -536,11 +536,35 @@ document.addEventListener("DOMContentLoaded", () => {
     postProcessContent();
   }
 
-  // 8. Các tiện ích hỗ trợ (Copy code, Prism, Lucide, Escape HTML)
+  // 8. Render công thức toán học MathType (KaTeX)
+  function renderMath() {
+    const container = document.getElementById("view-container") || document.body;
+    if (window.renderMathInElement) {
+      try {
+        renderMathInElement(container, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true }
+          ],
+          throwOnError: false,
+          ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+        });
+      } catch (err) {
+        console.warn("KaTeX render error:", err);
+      }
+    } else {
+      setTimeout(renderMath, 150);
+    }
+  }
+
+  // 9. Các tiện ích hỗ trợ (Copy code, Prism, Lucide, Escape HTML)
   function postProcessContent() {
     if (window.lucide) lucide.createIcons();
     if (window.Prism) Prism.highlightAll();
     initMermaid();
+    renderMath();
 
     // Setup nút Copy Code
     document.querySelectorAll(".copy-btn").forEach(btn => {

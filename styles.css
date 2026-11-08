@@ -343,3 +343,171 @@ h1 .katex, h2 .katex, h3 .katex {
   font-size: 0.95em;
   color: inherit;
 }
+
+/* ==========================================================================
+   Pedagogical Visual Components (Giải thích trực quan, mổ xẻ code & Trace Table)
+   ========================================================================== */
+
+/* Hộp liên tưởng đời thực (Mental Model) */
+.analogy-box {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(217, 119, 6, 0.03) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-left: 4px solid #f59e0b;
+  border-radius: 8px;
+  padding: 1.15rem 1.35rem;
+  margin: 1.25rem 0;
+  font-size: 0.95rem;
+}
+
+.analogy-box h4 {
+  color: #d97706;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+[data-theme="dark"] .analogy-box h4 {
+  color: #fbbf24;
+}
+
+/* Hộp mô phỏng ô nhớ RAM / Cơ chế hoạt động máy tính */
+.memory-box {
+  background: rgba(99, 102, 241, 0.06);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-left: 4px solid #6366f1;
+  border-radius: 8px;
+  padding: 1.15rem 1.35rem;
+  margin: 1.25rem 0;
+  font-size: 0.93rem;
+}
+
+.memory-box h4 {
+  color: #4f46e5;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+}
+
+[data-theme="dark"] .memory-box h4 {
+  color: #818cf8;
+}
+
+/* Hộp giải phẫu từng dòng code (Line-by-line Code Dissection) */
+.dissect-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.dissect-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.dissect-item:last-child {
+  border-bottom: none;
+}
+
+.dissect-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(20, 136, 216, 0.12);
+  color: var(--primary-light);
+  white-space: nowrap;
+}
+
+/* Bảng Trace Table (Chạy tay qua từng vòng lặp) */
+.trace-table-container {
+  overflow-x: auto;
+  margin: 1.25rem 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.trace-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+}
+
+.trace-table th {
+  background: rgba(20, 136, 216, 0.1);
+  padding: 0.65rem 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.trace-table td {
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.trace-table tr:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .trace-table tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* So sánh Sai vs Đúng (Pitfall vs Best Practice) */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+@media (min-width: 768px) {
+  .compare-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.compare-card {
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+.compare-card.bad {
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-top: 4px solid #ef4444;
+}
+
+.compare-card.good {
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-top: 4px solid #22c55e;
+}
+
+.compare-header {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.compare-card.bad .compare-header {
+  color: #dc2626;
+}
+
+.compare-card.good .compare-header {
+  color: #16a34a;
+}

@@ -89,30 +89,6 @@ window.EXERCISES_DATA = [
     "notes": "Bài toán thực tế trong môn Sức bền vật liệu và Thí nghiệm công trình."
   },
   {
-    "id": "ex_ch5_01",
-    "chapter": "ch5",
-    "chapterTitle": "Chương 5",
-    "title": "Bài 5.1: Xây dựng Module Ma trận hoàn chỉnh (matrixEM.py)",
-    "level": "Đề thi",
-    "problem": "Viết module matrixEM.py gồm các hàm: cộng ma trận, nhân 2 ma trận bất kỳ, trích xuất ma trận con và tính định thức ma trận vuông cấp $n$ bằng đệ quy.",
-    "analysis": "Khai triển Laplace theo dòng 0: $\\det(A) = \\sum_{j=0}^{n-1} (-1)^j A_{0j} \\det(M_{0j})$. Trường hợp dừng của đệ quy là $n=1$ hoặc $n=2$.",
-    "flowchart": "\nflowchart TD\n    Start([\"determinant(A)\"]) --> CheckN{\"Kích thước n?\"}\n    CheckN -- \"n == 1\" --> Ret1[\"Trả về A[0][0]\"]\n    CheckN -- \"n == 2\" --> Ret2[\"Trả về A[0][0]*A[1][1] - A[0][1]*A[1][0]\"]\n    CheckN -- \"n > 2\" --> Loop[\"Duyệt từng cột j = 0 đến n-1:<br>1. Lấy ma trận con sub_j (bỏ hàng 0, cột j)<br>2. det += (-1)^j * A[0][j] * determinant(sub_j)\"]\n    Loop --> RetN[\"Trả về det\"]\n    ",
-    "solution": "# File: matrixEM.py\n\ndef add_matrix(A, B):\n    m, n = len(A), len(A[0])\n    return [[A[i][j] + B[i][j] for j in range(n)] for i in range(m)]\n\ndef multiply_matrix(A, B):\n    m, n = len(A), len(A[0])\n    n_b, p = len(B), len(B[0])\n    if n != n_b:\n        raise ValueError(\"Số cột của A phải bằng số hàng của B!\")\n    C = [[0.0] * p for _ in range(m)]\n    for i in range(m):\n        for j in range(p):\n            C[i][j] = sum(A[i][k] * B[k][j] for k in range(n))\n    return C\n\ndef get_submatrix(A, rem_r, rem_c):\n    return [\n        [val for c_idx, val in enumerate(row) if c_idx != rem_c]\n        for r_idx, row in enumerate(A) if r_idx != rem_r\n    ]\n\ndef determinant(A):\n    n = len(A)\n    if n == 1:\n        return A[0][0]\n    if n == 2:\n        return A[0][0] * A[1][1] - A[0][1] * A[1][0]\n    det = 0.0\n    for j in range(n):\n        sign = (-1) ** j\n        sub = get_submatrix(A, 0, j)\n        det += sign * A[0][j] * determinant(sub)\n    return det\n\nif __name__ == \"__main__\":\n    M = [\n        [2, 1, -1],\n        [-5, -1, 4],\n        [1, -6, 7]\n    ]\n    print(\"Định thức ma trận M cấp 3x3 =\", determinant(M))",
-    "notes": "Yêu cầu cốt lõi bài tập 21 trong BT Chương 5."
-  },
-  {
-    "id": "ex_ch5_02",
-    "chapter": "ch5",
-    "chapterTitle": "Chương 5",
-    "title": "Bài 5.2: Xấp xỉ tích phân hình thang cho tải trọng phân bố",
-    "level": "Nâng cao",
-    "problem": "Viết hàm tính xấp xỉ tích phân $I = \\int_{x_1}^{x_2} (ax^2 + bx + c) dx$ bằng công thức hình thang với số khoảng chia $n$. So sánh với nghiệm giải tích chính xác.",
-    "analysis": "Công thức hình thang: $I \\approx h \\left[ \\frac{f(a) + f(b)}{2} + \\sum_{i=1}^{n-1} f(x_i) \\right]$. Nghiệm giải tích: $F(x) = \\frac{a x^3}{3} + \\frac{b x^2}{2} + c x$.",
-    "flowchart": "\nflowchart TD\n    Start([\"Bắt đầu\"]) --> In[\"f(x) = ax^2 + bx + c, [x1, x2], n\"]\n    In --> Step[\"h = (x2 - x1) / n\"]\n    Step --> Init[\"sum_val = 0.5 * (f(x1) + f(x2))\"]\n    Init --> Loop[\"For i từ 1 đến n-1:<br>sum_val += f(x1 + i*h)\"]\n    Loop --> Result[\"I = sum_val * h\"]\n    Result --> Exact[\"Tính F(x2) - F(x1) giải tích\"]\n    Exact --> Out[\"In giá trị xấp xỉ và sai số tuyệt đối\"] --> End([\"Kết thúc\"])\n    ",
-    "solution": "def tich_phan_hinh_thang(a, b, c, x1, x2, n=1000):\n    f = lambda x: a*(x**2) + b*x + c\n    h = (x2 - x1) / n\n    tong = 0.5 * (f(x1) + f(x2))\n    for i in range(1, n):\n        tong += f(x1 + i * h)\n    I_approx = tong * h\n    \n    # Giải tích chính xác: Nguyên hàm F(x) = a*x^3/3 + b*x^2/2 + c*x\n    F = lambda x: (a * x**3) / 3.0 + (b * x**2) / 2.0 + c * x\n    I_exact = F(x2) - F(x1)\n    \n    sai_so = abs(I_approx - I_exact)\n    return I_approx, I_exact, sai_so\n\n# Tính tích phân f(x) = 2x^2 - 3x + 5 từ 0 đến 6\napprox, exact, err = tich_phan_hinh_thang(2, -3, 5, 0, 6, n=500)\nprint(f\"Tích phân xấp xỉ: {approx:.6f}\")\nprint(f\"Giải tích chính xác: {exact:.6f}\")\nprint(f\"Sai số tuyệt đối: {err:.2e}\")",
-    "notes": "Dùng để tính hợp lực phân bố và tọa độ trọng tâm biểu đồ nội lực."
-  },
-  {
     "id": "ex_ch6_01",
     "chapter": "ch6",
     "chapterTitle": "Chương 6",
@@ -207,6 +183,30 @@ window.EXERCISES_DATA = [
     "flowchart": "\nflowchart TD\n    Start([\"Bắt đầu\"]) --> Loop[\"For i từ 1 đến 9\"]\n    Loop --> Print[\"In chuỗi: str(i) * i\"]\n    Print --> CheckLoop{\"Hết vòng lặp?\"}\n    CheckLoop -- \"Chưa\" --> Loop\n    CheckLoop -- \"Hết\" --> End([\"Kết thúc\"])\n    ",
     "solution": "def in_thap_so():\n    # Cách 1: Tận dụng phép nhân chuỗi trong Python (nhanh, chuẩn Pythonic)\n    for i in range(1, 10):\n        print(str(i) * i)\n\n# Cách 2: Bằng 2 vòng lặp lồng nhau (Nested loops cổ điển)\ndef in_thap_so_nested():\n    for i in range(1, 10):\n        for j in range(i):\n            print(i, end=\"\")\n        print()\n\nin_thap_so()",
     "notes": "Bài tập 5 trong file BT Chương 4."
+  },
+  {
+    "id": "ex_ch5_01",
+    "chapter": "ch5",
+    "chapterTitle": "Chương 5",
+    "title": "Bài 5.1: Xây dựng Module Tính Đặc Trưng Hình Học Mặt Cắt & Kiểm Tra Độ Bền",
+    "level": "Trung bình",
+    "problem": "1. Viết hàm `tinh_dac_trung_mat_cat(b, h)` trả về cùng lúc 4 giá trị đặc trưng của mặt cắt dầm chữ nhật: Diện tích $A = b \\cdot h$, Mô-men quán tính $I_x = \\frac{b h^3}{12}$, Mô-men kháng uốn $W_x = \\frac{b h^2}{6}$, và Bán kính quán tính $i_x = \\sqrt{I_x / A}$.\\n2. Viết hàm `kiem_tra_ben_dam(M_max, Wx, sigma_cp=160.0)` với tham số mặc định ứng suất cho phép $[\\sigma] = 160$ MPa, kiểm tra điều kiện bền $\\sigma = \\frac{M_{\\max}}{W_x} \\le [\\sigma]$.",
+    "analysis": "Hàm trong Python có thể trả về nhiều giá trị bằng cách ngăn cách bởi dấu phẩy (được đóng gói thành Tuple). Sử dụng kỹ thuật giải nén Tuple Unpacking khi gọi hàm: `A, Ix, Wx, ix = tinh_dac_trung_mat_cat(b, h)`.",
+    "flowchart": "\nflowchart TD\n    Start([\"Bắt đầu: Nhập b, h, M_max\"]) --> CalcSec[\"A = b*h<br>Ix = b*h^3 / 12<br>Wx = b*h^2 / 6<br>ix = sqrt(Ix / A)\"]\n    CalcSec --> CalcStress[\"sigma = M_max / Wx\"]\n    CalcStress --> CheckStress{\"sigma <= sigma_cp ?\"}\n    CheckStress -- \"Đúng\" --> Pass[\"Kết luận: ĐẠT BỀN\"] --> EndNode([\"Kết thúc\"])\n    CheckStress -- \"Sai\" --> Fail[\"Cảnh báo: QUÁ TẢI BỀN\"] --> EndNode\n    classDef step fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;\n    class Start,CalcSec,CalcStress,CheckStress,Pass,Fail,EndNode step;\n",
+    "solution": "import math\n\n# 1. Hàm tính toán và trả về nhiều giá trị\ndef tinh_dac_trung_mat_cat(b, h):\n    if b <= 0 or h <= 0:\n        raise ValueError(\"Kích thước hình học phải là số dương!\")\n    A = b * h\n    Ix = (b * (h ** 3)) / 12.0\n    Wx = (b * (h ** 2)) / 6.0\n    ix = math.sqrt(Ix / A)\n    return A, Ix, Wx, ix\n\n# 2. Hàm kiểm tra độ bền với tham số mặc định sigma_cp = 160 MPa\ndef kiem_tra_ben_dam(M_max, Wx, sigma_cp=160.0):\n    # M_max đơn vị kNm, Wx đơn vị m3, sigma_cp đơn vị MPa\n    sigma_max = (M_max * 1e3) / Wx / 1e6 # Đổi sang MPa\n    dat_ben = sigma_max <= sigma_cp\n    return dat_ben, sigma_max\n\n# Thử nghiệm tính toán:\nb_dam, h_dam = 0.2, 0.4 # 200mm x 400mm\nA, Ix, Wx, ix = tinh_dac_trung_mat_cat(b_dam, h_dam)\n\nprint(f\"Diện tích A = {A:.4f} m2\")\nprint(f\"Mô-men quán tính Ix = {Ix:.6e} m4\")\nprint(f\"Mô-men kháng uốn Wx = {Wx:.6e} m3\")\n\nM = 85.0 # kNm\nan_toan, ung_suat = kiem_tra_ben_dam(M, Wx)\nprint(f\"Ứng suất uốn lớn nhất: {ung_suat:.2f} MPa -> An toàn: {an_toan}\")",
+    "notes": "Tách nhỏ các phép tính toán kỹ thuật thành từng hàm chuyên biệt là nguyên tắc vàng giúp mã nguồn dễ kiểm thử và tái sử dụng."
+  },
+  {
+    "id": "ex_ch5_02",
+    "chapter": "ch5",
+    "chapterTitle": "Chương 5",
+    "title": "Bài 5.2: Xử lý Tham số Bất định *args & Lambda Function trong Hợp Lực Cơ Học",
+    "level": "Trung bình",
+    "problem": "1. Viết hàm `hop_luc_dong_quy(*cac_luc)` nhận vào số lượng lực tùy ý ($F_1, F_2, \\dots, F_n$), tính và trả về tổng độ lớn lực.\\n2. Sử dụng biểu thức Lambda kết hợp hàm `filter()` để lọc ra các tải trọng vượt quá ngưỡng an toàn $F_{limit} = 50$ kN từ một danh sách đo đạc.",
+    "analysis": "`*cac_luc` gom toàn bộ đối số vị trí thành 1 Tuple. Biểu thức `filter(lambda F: F > 50, ds_tai)` duyệt qua danh sách và lọc theo điều kiện trong 1 dòng code.",
+    "flowchart": "\nflowchart LR\n    Args[\"*cac_luc<br>(Gom thành Tuple)\"] --> SumLoop[\"for F in cac_luc:<br>tong += F\"]\n    SumLoop --> Out[\"Trả về tổng lực\"]\n    classDef step fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;\n    class Args,SumLoop,Out step;\n",
+    "solution": "# 1. Hàm với số lượng tham số tùy ý (*args)\ndef hop_luc_dong_quy(*cac_luc):\n    tong = sum(cac_luc)\n    return tong\n\nprint(\"Hợp lực của 2 lực (10, 25):\", hop_luc_dong_quy(10.0, 25.0), \"kN\")\nprint(\"Hợp lực của 4 lực (15, 20, 35, 10):\", hop_luc_dong_quy(15.0, 20.0, 35.0, 10.0), \"kN\")\n\n# 2. Sử dụng Lambda Function để lọc tải trọng nguy hiểm (> 50 kN)\nds_do_dac = [25.0, 62.5, 48.0, 80.5, 33.0, 55.0]\ntai_nguy_hiem = list(filter(lambda F: F > 50.0, ds_do_dac))\nprint(\"Các tải trọng vượt ngưỡng 50 kN:\", tai_nguy_hiem)",
+    "notes": "Lambda giúp viết các hàm lọc và biến đổi dữ liệu ngắn gọn, biểu cảm mà không cần định nghĩa hàm def phụ."
   },
   {
     "id": "ex_ch5_03",

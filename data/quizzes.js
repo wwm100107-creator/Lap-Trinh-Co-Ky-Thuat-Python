@@ -189,40 +189,62 @@ window.QUIZZES_DATA = [
   },
   {
     "chapterId": "ch5",
-    "title": "Trắc nghiệm Chương 5: Hàm và Module",
+    "title": "Trắc nghiệm Chương 5: Hàm và Module trong Python",
     "questions": [
       {
-        "question": "Đoạn code sau xuất ra kết quả gì?\n```python\ndef them_luc(p_list, p=10):\n    p_list.append(p)\n\nloads = [50, 60]\nthem_luc(loads, 70)\nprint(loads)\n```",
+        "question": "Theo bài giảng của PGS. TS. Nguyễn Thanh Nhã, 'Tham số' (Parameter) và 'Đối số' (Argument) khác nhau như thế nào?",
         "options": [
-          "[50, 60]",
-          "[50, 60, 70]",
-          "[70]",
-          "Lỗi UnboundLocalError"
+          "Parameter xuất hiện trong định nghĩa hàm (def); Argument xuất hiện trong lời gọi hàm thực tế",
+          "Parameter xuất hiện trong lời gọi hàm; Argument xuất hiện trong định nghĩa hàm",
+          "Parameter và Argument là hai từ đồng nghĩa hoàn toàn giống nhau",
+          "Parameter bắt buộc phải là hằng số, còn Argument bắt buộc phải là biến"
         ],
-        "answer": 1,
-        "explain": "List là kiểu dữ liệu khả biến (Mutable). Khi truyền vào hàm theo cơ chế Pass-by-object-reference, phương thức `.append()` sửa trực tiếp lên vùng nhớ của list gốc bên ngoài hàm."
+        "answer": 0,
+        "explain": "Theo slide Thầy Nhã (trang 5, Chương 5): Tham số (Parameter) là biến xuất hiện trong phần định nghĩa hàm sau 'def'; còn Đối số (Argument) là giá trị, biến hoặc biểu thức thực tế xuất hiện trong lời gọi hàm."
       },
       {
-        "question": "Trong định nghĩa hàm `def tinh_toan(*args, **kwargs):`, kiểu dữ liệu của `args` và `kwargs` bên trong hàm lần lượt là gì?",
+        "question": "Quan sát đoạn mã sau từ slide Thầy Nhã (trang 8):\n```python\ndef changeme(mylist):\n    mylist = [1, 2, 3, 4]\n\nmyList = [10, 20, 30]\nchangeme(myList)\nprint(myList)\n```\nKết quả in ra màn hình là gì?",
         "options": [
-          "List và Dictionary",
-          "Tuple và Dictionary",
-          "Tuple và List",
-          "Set và Dictionary"
+          "[10, 20, 30]",
+          "[1, 2, 3, 4]",
+          "[10, 20, 30, [1, 2, 3, 4]]",
+          "Báo lỗi UnboundLocalError"
         ],
-        "answer": 1,
-        "explain": "`*args` gom các tham số vị trí không định danh vào một `Tuple` (bất biến), còn `**kwargs` gom các tham số có tên khóa (keyword arguments) vào một `Dictionary`."
+        "answer": 0,
+        "explain": "Bên trong hàm changeme, phép gán `mylist = [1, 2, 3, 4]` tạo ra một đối tượng List mới tinh và chỉ gán cho con trỏ cục bộ mylist. Biến myList bên ngoài hàm vẫn trỏ vào danh sách ban đầu [10, 20, 30] không hề bị ảnh hưởng!"
       },
       {
-        "question": "Khối lệnh `if __name__ == '__main__':` trong file module có ý nghĩa gì?",
+        "question": "Cú pháp định nghĩa hàm nặc danh Lambda trong Python là gì?",
         "options": [
-          "Bắt buộc phải có để Python biên dịch file sang mã máy",
-          "Chỉ thực thi đoạn code bên trong khi file được chạy trực tiếp, không chạy khi bị import vào file khác",
-          "Khởi tạo hàm main() giống như trong C++ hay Java",
-          "Kiểm tra xem người dùng có quyền quản trị (Admin) hay không"
+          "lambda [arg1, arg2, ...]: bieu_thuc",
+          "def lambda [arg1, arg2, ...]: return bieu_thuc",
+          "function lambda(arg1, arg2) => bieu_thuc",
+          "lambda: {arg1, arg2 -> bieu_thuc}"
         ],
-        "answer": 1,
-        "explain": "Khi chạy trực tiếp file bằng `python file.py`, biến `__name__` có giá trị là `'__main__'`. Khi file đó được file khác import, `__name__` sẽ là tên của module, giúp ngăn các đoạn code kiểm thử tự động chạy khi import."
+        "answer": 0,
+        "explain": "Theo slide Thầy Nhã (trang 12, Chương 5): Cú pháp chuẩn của hàm nặc danh là `lambda [arg1, arg2, ...]: bieu_thuc`. Lambda chỉ chứa 1 biểu thức duy nhất và tự động trả về giá trị biểu thức đó."
+      },
+      {
+        "question": "Quy tắc bắt buộc khi định nghĩa hàm có tham số mặc định (Default arguments) trong Python là gì?",
+        "options": [
+          "Các tham số mặc định bắt buộc phải đặt ở sau cùng của danh sách tham số",
+          "Các tham số mặc định bắt buộc phải đặt ở đầu tiên",
+          "Có thể đặt tham số mặc định ở bất kỳ vị trí nào",
+          "Mỗi hàm chỉ được phép có duy nhất 1 tham số mặc định"
+        ],
+        "answer": 0,
+        "explain": "Theo slide Thầy Nhã (trang 9, Chương 5): Trong Python, các tham số mặc định bắt buộc phải đặt sau cùng danh sách tham số. Khai báo dạng `def f(a=1, b):` sẽ bị báo lỗi `SyntaxError: non-default argument follows default argument`."
+      },
+      {
+        "question": "Khối lệnh `if __name__ == '__main__':` trong một file module Python có ý nghĩa kỹ thuật gì?",
+        "options": [
+          "Ngăn các đoạn code chạy thử nghiệm tự động thực thi khi file đó được module khác import",
+          "Ép buộc file đó phải chạy bằng quyền Administrator",
+          "Khai báo hàm main cho chương trình giống ngôn ngữ C/C++",
+          "Định nghĩa điểm bắt đầu của một vòng lặp vô hạn"
+        ],
+        "answer": 0,
+        "explain": "Khi chạy trực tiếp file bằng `python file.py`, biến `__name__` có giá trị `'__main__'`. Khi được file khác import, `__name__` mang tên của module. Khối lệnh này giúp các câu lệnh test không bị chạy ngoài ý muốn khi module được tái sử dụng."
       }
     ]
   },

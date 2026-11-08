@@ -321,29 +321,73 @@ window.QUIZZES_DATA = [
   },
   {
     "chapterId": "ch7",
-    "title": "Trắc nghiệm Chương 7: NumPy & Matplotlib",
+    "title": "Trắc nghiệm Chương 7: Tính toán Số NumPy & Đồ họa Kỹ thuật Matplotlib",
     "questions": [
       {
-        "question": "Để giải hệ phương trình cân bằng kết cấu [A]{X} = {B}, tại sao nên dùng `np.linalg.solve(A, B)` thay vì `np.linalg.inv(A) @ B`?",
+        "question": "Vì sao mảng đa chiều `ndarray` trong NumPy có tốc độ tính toán nhanh hơn Python List hàng trăm lần?",
         "options": [
-          "`solve` sử dụng phân rã LU, nhanh hơn và ít tích lũy sai số làm tròn số thực hơn tính ma trận nghịch đảo",
-          "Tính ma trận nghịch đảo `inv(A)` tốn nhiều bộ nhớ RAM hơn",
-          "`inv(A)` sẽ báo lỗi nếu ma trận có số chiều lớn hơn 2",
-          "Cả A và B đều đúng"
-        ],
-        "answer": 3,
-        "explain": "Việc tính nghịch đảo tường minh `inv(A)` vừa tốn gấp đôi phép tính vừa gây sai số tích lũy lớn khi ma trận có điều kiện xấu (ill-conditioned). Hàm `solve` dùng thuật toán phân rã LU tối ưu hơn nhiều."
-      },
-      {
-        "question": "Lệnh `plt.subplot(3, 2, 5)` trong Matplotlib tạo khung đồ thị nằm ở vị trí nào?",
-        "options": [
-          "Hàng 3, Cột 1",
-          "Hàng 2, Cột 1",
-          "Hàng 3, Cột 2",
-          "Hàng 1, Cột 3"
+          "Vì NumPy lưu trữ dữ liệu trong một vùng nhớ C liên tục (Contiguous Memory Buffer) đồng nhất kiểu, tối ưu bộ đệm CPU Cache và SIMD",
+          "Vì NumPy sử dụng con trỏ động trỏ đến các đối tượng Python phân tán trong RAM",
+          "Vì NumPy chạy trực tiếp trên GPU mặc định mà không cần cài thêm thư viện",
+          "Vì các phép toán trong NumPy luôn chuyển về kiểu chuỗi ký tự để xử lý"
         ],
         "answer": 0,
-        "explain": "Lưới 3 hàng 2 cột gồm 6 ô (đếm từ 1 theo hàng): Hàng 1 gồm ô 1, 2; Hàng 2 gồm ô 3, 4; Hàng 3 gồm ô 5, 6. Do đó ô số 5 nằm ở Hàng 3, Cột 1."
+        "explain": "Python List là mảng các con trỏ trỏ đến các đối tượng PyObject rải rác trong RAM, gây trễ Cache Miss liên tục. Ngược lại, NumPy cấp phát mảng C liên tục với kích thước cố định (ví dụ float64 chiếm đúng 8 bytes) và kích hoạt tập lệnh SIMD của CPU tính toán song song."
+      },
+      {
+        "question": "Cho mảng `arr` (3x4). Khi bạn thực hiện cắt mảng `b = arr[:2, 1:3]` rồi gán `b[0, 0] = 16`, điều gì sẽ xảy ra với phần tử gốc `arr[0, 1]`?",
+        "options": [
+          "`arr[0, 1]` vẫn giữ nguyên giá trị ban đầu vì `b` là một mảng độc lập",
+          "`arr[0, 1]` bị thay đổi thành 16 vì phép cắt lát Slicing trong NumPy tạo ra một View trỏ chung vùng nhớ",
+          "Chương trình báo lỗi phân quyền ValueError: Assignment to a read-only buffer",
+          "Chỉ có `b` bị thay đổi, còn `arr` sẽ tự động nhân bản ngầm"
+        ],
+        "answer": 1,
+        "explain": "Slide Trang 5 (PGS. TS. Nguyễn Thanh Nhã nhấn mạnh): Để tiết kiệm bộ nhớ, slicing trong NumPy tạo ra một View trỏ vào cùng khối nhớ của mảng gốc. Sửa phần tử trên view sẽ làm biến dạng mảng gốc. Để tạo mảng độc lập, bắt buộc phải dùng `arr.copy()` (Slide Trang 6)."
+      },
+      {
+        "question": "Trong NumPy, điểm khác biệt sống còn giữa toán tử `*` và phương thức `x.dot(y)` (hoặc `x @ y`) là gì?",
+        "options": [
+          "`*` là phép nhân ma trận đại số tuyến tính như MATLAB; `.dot()` là nhân từng phần tử",
+          "`*` là phép nhân từng phần tử tương ứng (Hadamard product); `.dot()` hoặc `@` mới là phép nhân ma trận đại số tuyến tính (dòng nhân cột)",
+          "Cả hai phép toán hoàn toàn giống nhau, chỉ khác nhau về tốc độ",
+          "`*` chỉ dùng cho số vô hướng, không áp dụng được cho mảng"
+        ],
+        "answer": 1,
+        "explain": "Slide Trang 6-7: Khác biệt cốt tử với MATLAB! Trong NumPy, toán tử `*` nhân từng cặp phần tử tương ứng $C[i,j] = A[i,j] \\times B[i,j]$. Muốn nhân 2 ma trận theo quy tắc đại số tuyến tính, bắt buộc phải dùng `x.dot(y)` hoặc toán tử `@`."
+      },
+      {
+        "question": "Cho lệnh tạo mảng: `arr = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])`. Các thuộc tính `arr.ndim`, `arr.shape`, và `arr.size` lần lượt có giá trị là gì?",
+        "options": [
+          "ndim = 2, shape = (2, 4), size = 8",
+          "ndim = 8, shape = (4, 2), size = 2",
+          "ndim = 1, shape = (8,), size = 8",
+          "ndim = 2, shape = (8,), size = 2"
+        ],
+        "answer": 0,
+        "explain": "Slide Trang 4: Mảng có 2 chiều (`ndim = 2`), kích thước gồm 2 hàng và 4 cột (`shape = (2, 4)`), và tổng số phần tử bằng tích các chiều $2 \\times 4 = 8$ (`size = 8`)."
+      },
+      {
+        "question": "Để kiểm tra xem hai ma trận/vector số thực $A \\cdot x$ và $b$ có bằng nhau hay không (có tính đến sai số làm tròn số thực của máy tính), hàm nào được Thầy Nhã khuyên dùng trong Slide Trang 9?",
+        "options": [
+          "`A.dot(x) == b`",
+          "`np.allclose(A.dot(x), b)`",
+          "`np.equal(A.dot(x), b)`",
+          "`math.isclose(A.dot(x), b)`"
+        ],
+        "answer": 1,
+        "explain": "Slide Trang 9: Không thể dùng `==` vì sai số làm tròn số thực dấu phẩy động (Floating-point error). Hàm `np.allclose(a, b)` kiểm tra tất cả các phần tử có thỏa mãn $|a - b| \\le (atol + rtol \\times |b|)$ hay không, trả về True/False chuẩn xác."
+      },
+      {
+        "question": "Khi sử dụng Matplotlib để vẽ hình tròn hoặc các chi tiết máy kỹ thuật, câu lệnh nào là bắt buộc để hình ảnh không bị méo mó tỷ lệ trục?",
+        "options": [
+          "`plt.axis('equal')`",
+          "`plt.axis('off')`",
+          "`plt.box('on')`",
+          "`plt.grid(True)`"
+        ],
+        "answer": 0,
+        "explain": "Slide Trang 12: Mặc định Matplotlib sẽ tự động co giãn trục x và y độc lập để vừa vặn khung hình, làm cho hình tròn bị méo thành hình elip. Lệnh `plt.axis('equal')` (hoặc `ax.set_aspect('equal')`) thiết lập tỷ lệ 1:1 giữa hai trục, bảo toàn chính xác hình dạng hình học kỹ thuật."
       }
     ]
   },

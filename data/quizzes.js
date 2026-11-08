@@ -1,8 +1,7 @@
 /**
- * BỘ CÂU HỎI TRẮC NGHIỆM TƯƠNG TÁC (KIỂM TRA HIỂU SÂU BẢN CHẤT)
- * Môn: Lập trình Cơ Kỹ Thuật - ĐH Bách Khoa TP.HCM
+ * QUIZZES DATA
+ * Dữ liệu câu hỏi trắc nghiệm theo từng chương
  */
-
 window.QUIZZES_DATA = [
   {
     "chapterId": "ch0_1",
@@ -250,29 +249,73 @@ window.QUIZZES_DATA = [
   },
   {
     "chapterId": "ch6",
-    "title": "Trắc nghiệm Chương 6: Lập trình Hướng đối tượng OOP",
+    "title": "Trắc nghiệm Chương 6: Lập trình Hướng đối tượng OOP trong Kỹ Thuật",
     "questions": [
       {
-        "question": "Tham số `self` đầu tiên trong các phương thức của class đại diện cho điều gì?",
+        "question": "Trong Python, điều gì xảy ra nếu bạn khai báo 2 phương thức `__init__` với số lượng tham số khác nhau trong cùng một class?",
         "options": [
-          "Đại diện cho chính class cha",
-          "Đại diện cho chính đối tượng thể hiện (instance) cụ thể đang gọi phương thức",
-          "Là một biến toàn cục (global variable) lưu trữ trạng thái",
-          "Tự động trỏ tới hàm khởi tạo __init__"
+          "Python tự động nạp chồng hàm tạo (Constructor Overloading) như C++",
+          "Phương thức `__init__` định nghĩa sau sẽ ghi đè và xóa sổ hoàn toàn phương thức định nghĩa trước",
+          "Trình thông dịch Python báo lỗi cú pháp SyntaxError ngay khi đọc class",
+          "Cả hai hàm đều tồn tại song song và được gọi tùy theo đối số truyền vào"
         ],
         "answer": 1,
-        "explain": "`self` là tham chiếu trỏ tới đối tượng cụ thể (instance) đang thực thi phương thức, cho phép truy cập và thay đổi các thuộc tính riêng `self.x`, `self.y` của đối tượng đó."
+        "explain": "Slide Trang 6 & 12 (PGS. TS. Nguyễn Thanh Nhã nhấn mạnh): Python là ngôn ngữ thông dịch động, không hỗ trợ Constructor Overloading qua khai báo trùng tên. Hàm sau sẽ ghi đè hoàn toàn hàm trước. Để hỗ trợ nhiều dạng tham số, phải dùng tham số mặc định (default arguments) hoặc @classmethod."
       },
       {
-        "question": "Trong bài toán kế thừa: class Rectangle kế thừa từ class Quadrangle. Lệnh nào sau đây gọi hàm khởi tạo của lớp cha đúng chuẩn nhất?",
+        "question": "Tham số `self` đầu tiên trong các phương thức của class đại diện cho điều gì và bản chất của lời gọi `obj.method(x)` là gì?",
         "options": [
-          "Quadrangle.__init__(self, p1, p2, p3, p4)",
-          "super().__init__(p1, p2, p3, p4)",
-          "parent.__init__(p1, p2, p3, p4)",
-          "Cả A và B đều đúng"
+          "Đại diện cho class cha; Python gọi `super().method(x)`",
+          "Đại diện cho chính thực thể (instance) đang gọi phương thức; Python tự động biên dịch thành `ClassName.method(obj, x)`",
+          "Là biến toàn cục lưu trữ trạng thái của chương trình",
+          "Là từ khóa bắt buộc của hệ điều hành để cấp phát bộ nhớ RAM"
         ],
-        "answer": 3,
-        "explain": "Cả A và B đều hoạt động, nhưng cách dùng `super().__init__(...)` (Cách B) là chuẩn mực và hiện đại nhất trong Python 3 vì hỗ trợ tốt đa kế thừa (MRO)."
+        "answer": 1,
+        "explain": "`self` là con trỏ tham chiếu đến chính đối tượng đang thực thi. Khi viết `obj.method(x)`, Python ngầm chuyển thành `ClassName.method(obj, x)`. Đó là lý do mọi phương thức của instance bắt buộc phải có `self` ở tham số đầu tiên."
+      },
+      {
+        "question": "Theo quy ước của Python (Slide Trang 13 & 14), thuộc tính hoặc phương thức Private được đặt tên như thế nào và cơ chế Name Mangling bảo vệ nó ra sao?",
+        "options": [
+          "Dùng từ khóa `private`: `private self.salary`",
+          "Bắt đầu bằng đúng 1 dấu gạch dưới `_` và Python khóa quyền đọc từ bên ngoài",
+          "Bắt đầu bằng 2 dấu gạch dưới `__` (kết thúc tối đa 1 gạch dưới); Python đổi tên nội bộ thành `_ClassName__attribute`",
+          "Bắt đầu và kết thúc bằng 2 dấu gạch dưới `__attribute__`"
+        ],
+        "answer": 2,
+        "explain": "Slide Trang 13: Kiểu Private có tên bắt đầu bằng 2 dấu gạch dưới `__` và kết thúc tối đa là 1 dấu gạch dưới. Python áp dụng cơ chế Name Mangling đổi tên thành `_ClassName__attribute` để tránh xung đột và che giấu truy cập trực tiếp."
+      },
+      {
+        "question": "Cho class `studentEM19` có biến `stdCount = 0` được khai báo ngoài các hàm. `stdCount` là loại biến gì và làm thế nào để tăng giá trị dùng chung cho toàn bộ lớp?",
+        "options": [
+          "Là Instance Attribute; tăng bằng `self.stdCount += 1`",
+          "Là Class Attribute (biến của lớp); cập nhật chuẩn xác bằng `studentEM19.stdCount += 1`",
+          "Là Local Variable; tự động reset về 0 sau mỗi lần gọi hàm",
+          "Là hằng số Constant, không thể thay đổi giá trị"
+        ],
+        "answer": 1,
+        "explain": "Slide Trang 5-6: `stdCount` là Class Attribute, được lưu trữ duy nhất một bản trong namespace của class và chia sẻ chung cho toàn bộ mọi instance. Cần cập nhật qua `studentEM19.stdCount += 1` để đảm bảo tính nhất quán."
+      },
+      {
+        "question": "Cú pháp khai báo `class Son(Father, Mother):` và `class D(A, B, C):` trong Slide Trang 16-17 thể hiện dạng kế thừa nào trong Python?",
+        "options": [
+          "Đơn thừa kế (Single Inheritance)",
+          "Thừa kế đa tầng (Multilevel Inheritance)",
+          "Đa thừa kế (Multiple Inheritance)",
+          "Thừa kế phân cấp (Hierarchical Inheritance)"
+        ],
+        "answer": 2,
+        "explain": "Slide Trang 16-17: Đa thừa kế (Multiple Inheritance) là mô hình một lớp con kế thừa đồng thời từ hai hay nhiều lớp cha khác nhau."
+      },
+      {
+        "question": "Trong Python, kết quả trả về của hai lệnh kiểm tra `issubclass(bool, int)` và `isinstance(Circle(1,2,3), Point)` (với `Circle` kế thừa `Point`) là gì?",
+        "options": [
+          "Cả hai đều trả về `True`",
+          "`issubclass(bool, int)` trả về `False`, `isinstance` trả về `True`",
+          "`issubclass` trả về `True`, `isinstance` trả về `False`",
+          "Cả hai đều báo lỗi TypeError"
+        ],
+        "answer": 0,
+        "explain": "Slide Trang 14: Trong Python, kiểu `bool` là lớp con kế thừa từ kiểu `int` (`issubclass(bool, int)` -> True). Đối tượng của lớp con `Circle` đương nhiên cũng là một thể hiện của lớp cha `Point` (`isinstance(...)` -> True)."
       }
     ]
   },

@@ -203,6 +203,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const ch = window.CHAPTERS_DATA.find(c => c.id === activeChapterId) || window.CHAPTERS_DATA[2];
     const isDone = progressState.completed.includes(ch.id);
 
+    const currentIndex = window.CHAPTERS_DATA.findIndex(c => c.id === ch.id);
+    const prevCh = currentIndex > 0 ? window.CHAPTERS_DATA[currentIndex - 1] : null;
+    const nextCh = currentIndex < window.CHAPTERS_DATA.length - 1 ? window.CHAPTERS_DATA[currentIndex + 1] : null;
+    const exCount = window.EXERCISES_DATA ? window.EXERCISES_DATA.filter(e => e.chapter === ch.id).length : 0;
+
     viewContainer.innerHTML = `
       <div class="max-w-4xl mx-auto py-4 px-2">
         <!-- Header Chương -->
@@ -225,8 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
             </button>
             
             <button id="btn-goto-ex" class="px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2">
-              <i data-lucide="code" class="w-4 h-4 text-blue-500"></i>
-              <span>Làm bài tập chương này</span>
+              <i data-lucide="dumbbell" class="w-4 h-4 text-blue-500"></i>
+              <span>Luyện tập (${exCount} bài tập)</span>
             </button>
           </div>
         </div>
@@ -234,6 +239,28 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Nội dung chi tiết -->
         <div class="content-body text-slate-800 dark:text-slate-200">
           ${ch.content}
+        </div>
+
+        <!-- Điều hướng cuối chương -->
+        <div class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          ${prevCh ? `
+            <button id="btn-prev-ch" class="w-full sm:w-auto px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-xs font-semibold flex items-center justify-center gap-2 text-slate-700 dark:text-slate-300 shadow-sm transition">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>${prevCh.code}</span>
+            </button>
+          ` : '<div class="hidden sm:block"></div>'}
+
+          <button id="btn-footer-goto-ex" class="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 hover:bg-blue-100 text-xs font-bold flex items-center justify-center gap-2 transition">
+            <i data-lucide="dumbbell" class="w-4 h-4"></i>
+            <span>Ngân Hàng Bài Tập ${ch.code} (${exCount} bài)</span>
+          </button>
+
+          ${nextCh ? `
+            <button id="btn-next-ch" class="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition">
+              <span>${nextCh.code}</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          ` : '<div class="hidden sm:block"></div>'}
         </div>
       </div>
     `;
@@ -255,10 +282,37 @@ document.addEventListener("DOMContentLoaded", () => {
       renderSidebar();
     });
 
-    document.getElementById("btn-goto-ex").addEventListener("click", () => {
+    const goToEx = () => {
       setActiveTab("exercises");
       filterExercisesByChapter(ch.id);
-    });
+    };
+
+    document.getElementById("btn-goto-ex").addEventListener("click", goToEx);
+
+    const btnFooterEx = document.getElementById("btn-footer-goto-ex");
+    if (btnFooterEx) btnFooterEx.addEventListener("click", goToEx);
+
+    const btnPrev = document.getElementById("btn-prev-ch");
+    if (btnPrev && prevCh) {
+      btnPrev.addEventListener("click", () => {
+        activeChapterId = prevCh.id;
+        renderTheoryView();
+        renderSidebar();
+        const mainEl = document.querySelector(".main-content");
+        if (mainEl) mainEl.scrollTop = 0;
+      });
+    }
+
+    const btnNext = document.getElementById("btn-next-ch");
+    if (btnNext && nextCh) {
+      btnNext.addEventListener("click", () => {
+        activeChapterId = nextCh.id;
+        renderTheoryView();
+        renderSidebar();
+        const mainEl = document.querySelector(".main-content");
+        if (mainEl) mainEl.scrollTop = 0;
+      });
+    }
 
     postProcessContent();
   }

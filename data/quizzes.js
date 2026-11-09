@@ -393,29 +393,73 @@ window.QUIZZES_DATA = [
   },
   {
     "chapterId": "ch8",
-    "title": "Trắc nghiệm Chương 8: Giao diện GUI Tkinter",
+    "title": "Trắc nghiệm Chương 8: Lập trình Giao diện Đồ họa Kỹ thuật (Tkinter)",
     "questions": [
       {
-        "question": "Vòng lặp `root.mainloop()` trong Tkinter có nhiệm vụ gì?",
+        "question": "Vòng lặp sự kiện `root.mainloop()` trong Tkinter đóng vai trò gì và điều gì sẽ xảy ra nếu thiếu câu lệnh này?",
         "options": [
-          "Biên dịch mã giao diện sang ngôn ngữ C",
-          "Giữ cho cửa sổ ứng dụng mở liên tục và lắng nghe các sự kiện (click chuột, gõ phím) từ người dùng",
-          "Tự động giải phóng bộ nhớ RAM khi tắt app",
-          "Tự động căn chỉnh kích thước các widget"
+          "Biên dịch toàn bộ mã giao diện sang ngôn ngữ C và tối ưu RAM",
+          "Duy trì vòng lặp lắng nghe vô tận (Event Loop) bắt các sự kiện từ chuột/bàn phím; nếu thiếu kịch bản sẽ kết thúc và cửa sổ tắt ngay lập tức",
+          "Tự động căn lề và định vị pixel cho tất cả các widget",
+          "Giải phóng bộ nhớ đồ họa khi ứng dụng chạy xong"
         ],
         "answer": 1,
-        "explain": "`mainloop()` là vòng lặp vô tận hướng sự kiện (Event Loop). Nếu thiếu dòng này, cửa sổ Tkinter sẽ nhấp nháy rồi tắt ngay lập tức vì luồng Python kết thúc kịch bản."
+        "explain": "Slide Trang 3: Tkinter hoạt động theo mô hình hướng sự kiện (Event-Driven). Lệnh `root.mainloop()` khởi chạy vòng lặp vô tận của Tk GUI toolkit để chờ đợi và phân phát các sự kiện người dùng (click chuột, gõ phím). Nếu không có dòng này, Python thực thi xong file kịch bản rồi lập tức thoát tiến trình, làm cửa sổ biến mất."
       },
       {
-        "question": "Để lấy giá trị từ ô nhập liệu `entry_L = tk.Entry(root)`, ta sử dụng cú pháp nào?",
+        "question": "Lớp widget `Message` khác biệt căn bản như thế nào so với `Label` thông thường theo Slide Trang 4 của PGS. TS. Nguyễn Thanh Nhã?",
         "options": [
-          "entry_L.value()",
-          "entry_L.get()",
-          "entry_L.text",
-          "str(entry_L)"
+          "Message cho phép người dùng nhập văn bản trực tiếp như Entry",
+          "Message có khả năng tự động ngắt dòng thông minh (word-wrapping) khi văn bản dài để vừa vặn với kích thước khung chứa, trong khi Label mặc định giữ nguyên trên một dòng",
+          "Message chỉ hỗ trợ hiển thị dữ liệu số, không hiển thị được chuỗi ký tự",
+          "Message bắt buộc phải kèm theo hình ảnh định dạng GIF"
         ],
         "answer": 1,
-        "explain": "Phương thức `.get()` của widget Entry luôn trả về dữ liệu kiểu chuỗi `str`. Muốn tính toán kỹ thuật, ta phải ép kiểu sang số thực: `float(entry_L.get())`."
+        "explain": "Slide Trang 4: 'The Message widget is a variant of the Label, designed to display multiline messages. The message widget is capable of wrapping text, and adjust its width to maintain a given aspect ratio.' Message tự động ngắt dòng thông minh theo tỷ lệ co giãn, rất phù hợp cho các đoạn văn bản dài."
+      },
+      {
+        "question": "Theo Slide Trang 7, tại sao Tkinter cung cấp các lớp biến riêng biệt như `StringVar`, `IntVar`, `DoubleVar`, `BooleanVar` thay vì dùng biến Python thông thường?",
+        "options": [
+          "Vì biến nguyên thủy Python chiếm quá nhiều dung lượng RAM",
+          "Vì các lớp biến Tkinter triển khai mẫu thiết kế Observer (Data-Binding), tự động thông báo và cập nhật tức thời giao diện widget khi giá trị biến thay đổi qua `.set()` và `.get()`",
+          "Vì Tkinter không hỗ trợ kiểu số nguyên và số thực của Python",
+          "Vì hệ điều hành chỉ hiểu được dữ liệu nhị phân từ các lớp này"
+        ],
+        "answer": 1,
+        "explain": "Slide Trang 7: 'Variable Classes (StringVar, IntVar, DoubleVar, BooleanVar) can be used to hold values of widgets, e.g. Entry or Radiobutton. It is not possible to pass an ordinary Python variable... because they are implemented as classes inheriting from Variable class.' Các biến này cung cấp cơ chế hai chiều Data-Binding tự động cập nhật UI."
+      },
+      {
+        "question": "Khi sử dụng nhóm nút chọn một `Radiobutton` (Slide Trang 8), làm thế nào để Tkinter hiểu các nút thuộc cùng một nhóm loại trừ lẫn nhau (chỉ được chọn 1 nút)?",
+        "options": [
+          "Đặt tên biến đại diện cho mỗi nút giống nhau: b1 = Radiobutton(), b2 = Radiobutton()",
+          "Cùng trỏ tham số `variable` về một đối tượng biến Tkinter chung (như IntVar), nhưng mỗi nút gán một tham số `value` khác biệt",
+          "Xếp tất cả các nút trên cùng một hàng trong bộ quản lý `grid()`",
+          "Sử dụng chung một hàm callback `command` cho mọi nút"
+        ],
+        "answer": 1,
+        "explain": "Slide Trang 8: Tất cả các Radiobutton trong cùng một nhóm loại trừ nhau bắt buộc phải chia sẻ chung một đối tượng biến `variable=v`, nhưng mang các giá trị nhận diện phân biệt `value=1`, `value=2`, v.v."
+      },
+      {
+        "question": "Trong ứng dụng Slide Trang 5 & 9, để lấy chuỗi ký tự người dùng đã nhập vào ô `entry = Entry(root)` và chuyển đổi thành số thực để tính toán kỹ thuật, cú pháp nào là chuẩn xác?",
+        "options": [
+          "val = float(entry.text)",
+          "val = float(entry.get())",
+          "val = float(entry.value)",
+          "val = float(str(entry))"
+        ],
+        "answer": 1,
+        "explain": "Slide Trang 5 & 9: Phương thức `entry.get()` trả về nội dung chuỗi trong ô nhập liệu. Để tính toán cơ học kỹ thuật, ta ép kiểu sang số thực bằng hàm chuẩn `float(entry.get())`."
+      },
+      {
+        "question": "Trong việc quản lý bố cục giao diện Tkinter, CẢNH BÁO sống còn nào sau đây phải tuân thủ để tránh làm treo ứng dụng (Deadlock)?",
+        "options": [
+          "Không được dùng màu nền quá sáng trên hệ điều hành Windows",
+          "Tuyệt đối không được trộn lẫn bộ quản lý `pack()` và `grid()` trên các widget con cùng nằm trong một khung chứa container (root hoặc Frame)",
+          "Bắt buộc phải khai báo `place()` trước khi gọi `mainloop()`",
+          "Không được đặt nhiều hơn 2 nút bấm Button trên một cửa sổ"
+        ],
+        "answer": 1,
+        "explain": "Cảnh báo sống còn: Trong Tkinter, việc trộn lẫn `pack()` và `grid()` trên các widget có cùng widget cha sẽ dẫn đến tình trạng Deadlock (hai thuật toán tranh giành quyền tính toán kích thước cửa sổ của nhau vô tận), làm ứng dụng bị treo (freeze) hoàn toàn."
       }
     ]
   }

@@ -1,0 +1,17 @@
+{
+  "name": "lap-trinh-co-ky-thuat-python",
+  "version": "2.0.0",
+  "description": "Hệ thống học tập tương tác Lập trình Cơ Kỹ Thuật (Python) - ĐHBK TP.HCM (HCMUT)",
+  "scripts": {
+    "build": "node build-check.js",
+    "test": "node build-check.js"
+  },
+  "keywords": [
+    "co-ky-thuat",
+    "python",
+    "hcmut",
+    "single-page-app"
+  ],
+  "author": "HCMUT",
+  "license": "MIT"
+}

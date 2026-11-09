@@ -58,6 +58,41 @@ code, pre {
   font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
 }
 
+/* ==========================================================================
+   Minimalist Vector SVG Icon System (Lucide/Feather Style)
+   ========================================================================== */
+.inline-svg, .svg-icon {
+  display: inline-block;
+  vertical-align: -2px;
+  margin-right: 6px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  transition: stroke 0.15s ease, transform 0.15s ease;
+}
+
+.inline-svg.no-margin, .svg-icon.no-margin {
+  margin-right: 0 !important;
+}
+
+.inline-svg.icon-sm {
+  width: 14px;
+  height: 14px;
+}
+
+.inline-svg.icon-md {
+  width: 16px;
+  height: 16px;
+}
+
+.inline-svg.icon-lg {
+  width: 20px;
+  height: 20px;
+}
+
 /* Sidebar & Layout */
 .app-layout {
   display: flex;

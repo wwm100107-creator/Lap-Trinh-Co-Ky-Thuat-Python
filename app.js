@@ -266,20 +266,32 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- RENDER EXERCISES VIEW ---
   let exerciseFilterChapter = "all";
   let exerciseFilterLevel = "all";
+  let exerciseSearchQuery = "";
 
   function renderExercisesView() {
     viewContainer.innerHTML = `
       <div class="max-w-4xl mx-auto py-4 px-2">
         <div class="mb-6 pb-4 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Ngân Hàng Bài Tập & Lời Giải Chi Tiết</h1>
-            <p class="text-sm text-slate-500 dark:text-slate-400">Đầy đủ 100% bài tập trích xuất từ các file BT Chương 2, 3, 4, 5, 5 bis, 6a, 7 và Đề Thi Thử.</p>
+            <div class="flex items-center gap-2 mb-1">
+              <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Ngân Hàng Bài Tập & Lời Giải Chi Tiết</h1>
+              <span id="exercise-badge-count" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                ${window.EXERCISES_DATA.length} Bài Tập
+              </span>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Đầy đủ 100% bài tập trích xuất từ các file BT Chương 2, 3, 4, 5, 5 bis, 6a, 7 và Đề Thi Thử của PGS. TS. Nguyễn Thanh Nhã (HCMUT).</p>
           </div>
           
-          <!-- Bộ lọc -->
+          <!-- Bộ lọc & Tìm kiếm -->
           <div class="flex flex-wrap items-center gap-2">
+            <div class="relative">
+              <input id="filter-search" type="text" placeholder="Tìm kiếm bài tập..." class="pl-8 pr-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium w-40 md:w-52 focus:outline-none focus:ring-2 focus:ring-blue-500" value="${escapeHtml(exerciseSearchQuery)}">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
+            </div>
+
             <select id="filter-chapter" class="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium">
               <option value="all">Tất cả các chương</option>
+              <option value="ch0_1">Chương 0 & 1: Máy tính & Biểu diễn số</option>
               <option value="ch2_3">Chương 2 & 3: Cơ bản & Kiểu dữ liệu</option>
               <option value="ch4">Chương 4: Cấu trúc điều khiển</option>
               <option value="ch5">Chương 5: Hàm & Module</option>
@@ -291,6 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <select id="filter-level" class="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-medium">
               <option value="all">Mọi độ khó</option>
               <option value="Dễ">Dễ</option>
+              <option value="Cơ bản">Cơ bản</option>
               <option value="Trung bình">Trung bình</option>
               <option value="Nâng cao">Nâng cao</option>
               <option value="Đề thi">Trọng tâm Đề thi</option>
@@ -304,6 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const selectCh = document.getElementById("filter-chapter");
     const selectLvl = document.getElementById("filter-level");
+    const inputSearch = document.getElementById("filter-search");
 
     selectCh.value = exerciseFilterChapter;
     selectLvl.value = exerciseFilterLevel;
@@ -317,6 +331,13 @@ document.addEventListener("DOMContentLoaded", () => {
       exerciseFilterLevel = e.target.value;
       populateExercises();
     });
+
+    if (inputSearch) {
+      inputSearch.addEventListener("input", (e) => {
+        exerciseSearchQuery = e.target.value;
+        populateExercises();
+      });
+    }
 
     populateExercises();
   }
@@ -333,11 +354,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!listEl) return;
     listEl.innerHTML = "";
 
+    const searchVal = exerciseSearchQuery.trim().toLowerCase();
     const filtered = window.EXERCISES_DATA.filter(ex => {
       const matchCh = exerciseFilterChapter === "all" || ex.chapter === exerciseFilterChapter;
       const matchLvl = exerciseFilterLevel === "all" || ex.level === exerciseFilterLevel;
-      return matchCh && matchLvl;
+      const matchSearch = !searchVal || 
+        (ex.title && ex.title.toLowerCase().includes(searchVal)) ||
+        (ex.problem && ex.problem.toLowerCase().includes(searchVal)) ||
+        (ex.analysis && ex.analysis.toLowerCase().includes(searchVal)) ||
+        (ex.solution && ex.solution.toLowerCase().includes(searchVal));
+      return matchCh && matchLvl && matchSearch;
     });
+
+    const badgeEl = document.getElementById("exercise-badge-count");
+    if (badgeEl) {
+      badgeEl.innerText = `${filtered.length} / ${window.EXERCISES_DATA.length} Bài Tập`;
+    }
 
     if (filtered.length === 0) {
       listEl.innerHTML = `<div class="p-8 text-center text-slate-400">Không tìm thấy bài tập phù hợp với bộ lọc hiện tại.</div>`;
@@ -350,6 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let levelBadge = "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300";
       if (ex.level === "Dễ") levelBadge = "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300";
+      if (ex.level === "Cơ bản") levelBadge = "bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300";
       if (ex.level === "Trung bình") levelBadge = "bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300";
       if (ex.level === "Nâng cao") levelBadge = "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300";
       if (ex.level === "Đề thi") levelBadge = "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300 font-bold";
